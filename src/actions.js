@@ -42,18 +42,22 @@ export class BluebellActions {
 
   formatBold (editor) {
     wrapSelection(editor, this.editSource, 'format.bold', '**', '**');
+    editor.pushUndoStop();
   }
 
   formatItalic (editor) {
     wrapSelection(editor, this.editSource, 'format.italic', '//', '//');
+    editor.pushUndoStop();
   }
 
   formatSuperscript (editor) {
     wrapSelection(editor, this.editSource, 'format.superscript', '{{^', '}}');
+    editor.pushUndoStop();
   }
 
   formatSubscript (editor) {
     wrapSelection(editor, this.editSource, 'format.subscript', '{{_', '}}');
+    editor.pushUndoStop();
   }
 
   insertFootnote (editor) {
@@ -93,6 +97,7 @@ export class BluebellActions {
       indent.length + 3 + text.length);
 
     editor.executeEdits(this.editSource, [content], [cursor]);
+    editor.pushUndoStop();
   }
 
   insertTable (editor) {
@@ -104,6 +109,7 @@ export class BluebellActions {
       range: sel,
       text: 'TABLE\n\n' + indent + ' TR\n\n' + indent + '   TH\n\n' + indent + '     Heading 1\n\n' + indent + '   TH\n\n' + indent + '     Heading 2\n\n' + indent + ' TR\n\n' + indent + '   TC\n\n' + indent + '     Content 1\n\n' + indent + '   TC\n' + indent + '     Content 2'
     }]);
+    editor.pushUndoStop();
   }
 }
 
