@@ -1,0 +1,11 @@
+{
+  "name": "bluebell-monaco",
+  "version": "1.0.0",
+  "description": "Monaco editor tooling for the Bluebell grammar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Greg Kempe <greg@laws.africa>",
+  "license": "UNLICENSED"
+}
