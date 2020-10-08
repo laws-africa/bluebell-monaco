@@ -3,9 +3,6 @@ export class BluebellActions {
     this.editSource = 'bluebell';
   }
 
-  /**
-   * Install common editor actions onto this monaco editor instance.
-   */
   installActions (editor) {
     const monaco = window.monaco;
 
@@ -108,6 +105,13 @@ export class BluebellActions {
       text: 'TABLE\n\n' + indent + ' TR\n\n' + indent + '   TH\n\n' + indent + '     Heading 1\n\n' + indent + '   TH\n\n' + indent + '     Heading 2\n\n' + indent + ' TR\n\n' + indent + '   TC\n\n' + indent + '     Content 1\n\n' + indent + '   TC\n' + indent + '     Content 2'
     }]);
   }
+}
+
+/**
+ * Install common editor actions onto this monaco editor instance.
+ */
+export function installActions (editor) {
+  new BluebellActions().installActions(editor);
 }
 
 /**

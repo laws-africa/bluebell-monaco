@@ -33,6 +33,6 @@ const editor = monaco.editor.create(elem, {
 Once you have created a monaco editor instance, setup Bluebell-related edit actions like this:
 
 ```js
-import { BluebellActions } from "bluebell-monaco";
-new BluebellActions().installActions(editor);
+import { installActions } from "bluebell-monaco";
+installActions(editor);
 ```
