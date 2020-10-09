@@ -2,6 +2,9 @@
 
 Bluebell grammar support for the [Monaco Editor](https://microsoft.github.io/monaco-editor/).
 
+* Language/syntax rules and a corresponding theme to enable syntax highlighting. Enabled with `registerLanguage()`.
+* Actions for monaco to apply formatting (eg. bold, italics). Enabled with `installActions()` and triggered using `editor.trigger('...', 'format.bold')`.
+
 ## Installation
 
 Install with
@@ -43,4 +46,3 @@ installActions(editor);
 2. Update the version in package.json, according to [semver.org](https://semver.org/)
 3. Commit and push.
 4. Publish to GitHub packages with `npm publish`
-
