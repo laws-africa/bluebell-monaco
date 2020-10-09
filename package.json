@@ -11,5 +11,8 @@
   "license": "UNLICENSED",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@laws-africa/indigo-akn": "^1.0.0"
   }
 }
