@@ -4,6 +4,7 @@ Bluebell grammar support for the [Monaco Editor](https://microsoft.github.io/mon
 
 * Language/syntax rules and a corresponding theme to enable syntax highlighting. Enabled with `registerLanguage()`.
 * Actions for monaco to apply formatting (eg. bold, italics). Enabled with `installActions()` and triggered using `editor.trigger('...', 'format.bold')`.
+* An Indigo GrammarModel for Bluebell
 
 ## Installation
 
