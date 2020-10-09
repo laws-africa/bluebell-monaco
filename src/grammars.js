@@ -5,7 +5,7 @@ import { installActions } from "./actions";
 /**
  * Grammar model for Bluebell and monaco.
  */
-class BluebellGrammarModel extends GrammarModel {
+export class BluebellGrammarModel extends GrammarModel {
   constructor (...args) {
     super(...args);
 
