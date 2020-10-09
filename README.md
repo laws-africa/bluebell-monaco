@@ -36,3 +36,11 @@ Once you have created a monaco editor instance, setup Bluebell-related edit acti
 import { installActions } from "bluebell-monaco";
 installActions(editor);
 ```
+
+## Releasing a new version
+
+1. Make your changes.
+2. Update the version in package.json, according to [semver.org](https://semver.org/)
+3. Commit and push.
+4. Publish to GitHub packages with `npm publish`
+
