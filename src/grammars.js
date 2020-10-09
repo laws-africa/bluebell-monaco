@@ -37,7 +37,7 @@ export class BluebellGrammarModel extends GrammarModel {
   }
 
   markupImage (title, src) {
-    return `{{IMG ${src}` + (title ? ` ${title}` : '');
+    return `{{IMG ${src}` + (title ? ` ${title}` : '') + '}}';
   }
 
   getImageAtCursor (editor) {
