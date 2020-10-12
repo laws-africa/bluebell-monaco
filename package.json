@@ -1,6 +1,6 @@
 {
   "name": "@laws-africa/bluebell-monaco",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "repository": "git://github.com/laws-africa/bluebell-monaco.git",
   "description": "Monaco editor tooling for the Bluebell grammar",
   "main": "index.js",
@@ -11,5 +11,8 @@
   "license": "UNLICENSED",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@laws-africa/indigo-akn": "^1.2.0"
   }
 }
