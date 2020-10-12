@@ -13,6 +13,6 @@
     "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@laws-africa/indigo-akn": "^1.2.0"
+    "@laws-africa/indigo-akn": "^1.3.0"
   }
 }

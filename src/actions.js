@@ -43,21 +43,25 @@ export class BluebellActions {
   }
 
   formatBold (editor) {
+    editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.bold', '**', '**');
     editor.pushUndoStop();
   }
 
   formatItalic (editor) {
+    editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.italic', '//', '//');
     editor.pushUndoStop();
   }
 
   formatSuperscript (editor) {
+    editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.superscript', '{{^', '}}');
     editor.pushUndoStop();
   }
 
   formatSubscript (editor) {
+    editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.subscript', '{{_', '}}');
     editor.pushUndoStop();
   }
@@ -74,6 +78,7 @@ export class BluebellActions {
       range: sel,
       text: '{{^{{FOOTNOTE 1}}}}'
     };
+    editor.pushUndoStop();
     editor.executeEdits(this.editSource, [marker]);
 
     // this edit will add the footnote content
@@ -106,6 +111,7 @@ export class BluebellActions {
     const sel = editor.getSelection();
     const indent = ' '.repeat(indentAtSelection(editor, sel));
 
+    editor.pushUndoStop();
     editor.executeEdits(this.editSource, [{
       identifier: 'insert.table',
       range: sel,
