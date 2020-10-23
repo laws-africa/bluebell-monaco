@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 describe('eIdRewriter', () => {
   describe('#rewriteAllEids()', () => {
-    it('should do basics correctly', () => {
+    it('should not change a document with correct eids', () => {
       const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
   <statement>
     <mainBody>
