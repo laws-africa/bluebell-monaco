@@ -92,7 +92,7 @@ export class EidRewriter {
   getEid (element, prefix) {
     let name = element.tagName,
         shortName = this.elementAliases[element.tagName] || name,
-        num = (element.firstChild && element.firstChild.tagName === 'num') ? element.firstChild.textContent: '',
+        num = (element.firstElementChild && element.firstElementChild.tagName === 'num') ? element.firstElementChild.textContent: '',
         eId = (prefix) ? `${prefix}__${shortName}`: shortName,
         nn = false;
     if (!this.idUnnecessary.includes(name)) {
