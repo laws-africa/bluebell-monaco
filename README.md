@@ -41,6 +41,11 @@ import { installActions } from "bluebell-monaco";
 installActions(editor);
 ```
 
+## Running tests
+
+1. Install dependencies: `npm install`
+2. Run tests: `npm test`
+
 ## Releasing a new version
 
 1. Make your changes.
