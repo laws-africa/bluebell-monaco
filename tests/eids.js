@@ -4,8 +4,7 @@ import { expect } from 'chai';
 describe('eIdRewriter', () => {
   describe('#rewriteAllEids()', () => {
     it('should do basics correctly', () => {
-      const xml = `
-<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+      const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
   <statement>
     <mainBody>
       <p eId="p_1"><i>The Conference of Parties,</i></p>
@@ -60,11 +59,10 @@ describe('eIdRewriter', () => {
       </division>
     </mainBody>
   </statement>
-</akomaNtoso>
-      `;
+</akomaNtoso>`;
       const doc = new DOMParser().parseFromString(xml, "text/xml");
       new EidRewriter().rewriteAllEids(doc);
-      expect(xml.trim()).to.equal(new XMLSerializer().serializeToString(doc));
+      expect(new XMLSerializer().serializeToString(doc)).to.equal(xml);
     });
   });
 });
