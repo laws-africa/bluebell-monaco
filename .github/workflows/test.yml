@@ -1,0 +1,24 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install dependencies
+      run: |
+        echo '//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}' >> .npmrc
+        npm ci --no-audit --prefer-offline
+        rm .npmrc
+      env:
+        GITHUB_TOKEN: ${{ secrets.LA_ACTIONS_TOKEN }}
+    - name: Run tests
+      run: |
+        npm test
