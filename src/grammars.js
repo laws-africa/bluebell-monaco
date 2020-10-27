@@ -1,6 +1,7 @@
 import { GrammarModel } from "@laws-africa/indigo-akn";
 import { LANGUAGE_ID, registerLanguage, THEME_ID } from "./language";
 import { installActions } from "./actions";
+import { AKN_TO_TEXT } from "./xslt";
 
 /**
  * Grammar model for Bluebell and monaco.
@@ -12,6 +13,14 @@ export class BluebellGrammarModel extends GrammarModel {
     this.language_id = LANGUAGE_ID;
     this.theme_id = THEME_ID;
     this.image_re = /{{IMG ([^ ]+)(\s+((?!}}).)*)?}}/g;
+  }
+
+  setup () {
+    const xml = new DOMParser().parseFromString(AKN_TO_TEXT, 'text/xml');
+    this.textTransform = new XSLTProcessor();
+    this.textTransform.importStylesheet(xml);
+    // return immediately resolved promise
+    return new Promise(resolve => resolve());
   }
 
   installLanguage () {
