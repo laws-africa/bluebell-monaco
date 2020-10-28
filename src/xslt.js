@@ -224,6 +224,7 @@ export const AKN_TO_TEXT = `
     <xsl:text>&#10;&#10;</xsl:text>
   </xsl:template>
 
+  <!-- block quotes as embeddedStructure -->
   <xsl:template match="a:embeddedStructure">
     <xsl:param name="indent">0</xsl:param>
 
