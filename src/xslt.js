@@ -56,7 +56,7 @@ export const AKN_TO_TEXT = `
   <xsl:template name="escape-inlines">
     <xsl:param name="text" />
 
-    <!-- This works from the inside out, first escaping \ chars themselves, then escaping
+    <!-- This works from the inside out, first escaping backslash chars themselves, then escaping
          the different types of inline markers -->
     <xsl:call-template name="string-replace-all">
       <xsl:with-param name="text">
@@ -74,36 +74,36 @@ export const AKN_TO_TEXT = `
                               <xsl:with-param name="text">
                                 <xsl:call-template name="string-replace-all">
                                   <xsl:with-param name="text" select="$text" />
-                                  <xsl:with-param name="value">\</xsl:with-param>
-                                  <xsl:with-param name="replacement">\\</xsl:with-param>
+                                  <xsl:with-param name="value"><xsl:value-of select="'\\'" /></xsl:with-param>
+                                  <xsl:with-param name="replacement"><xsl:value-of select="'\\\\'" /></xsl:with-param>
                                 </xsl:call-template>
                               </xsl:with-param>
-                              <xsl:with-param name="value">**</xsl:with-param>
-                              <xsl:with-param name="replacement">\**</xsl:with-param>
+                              <xsl:with-param name="value"><xsl:value-of select="'**'" /></xsl:with-param>
+                              <xsl:with-param name="replacement"><xsl:value-of select="'\\**'" /></xsl:with-param>
                             </xsl:call-template>
                           </xsl:with-param>
-                          <xsl:with-param name="value">//</xsl:with-param>
-                          <xsl:with-param name="replacement">\//</xsl:with-param>
+                          <xsl:with-param name="value"><xsl:value-of select="'//'" /></xsl:with-param>
+                          <xsl:with-param name="replacement"><xsl:value-of select="'\\//'" /></xsl:with-param>
                         </xsl:call-template>
                       </xsl:with-param>
-                      <xsl:with-param name="value">__</xsl:with-param>
-                      <xsl:with-param name="replacement">\__</xsl:with-param>
+                      <xsl:with-param name="value"><xsl:value-of select="'__'" /></xsl:with-param>
+                      <xsl:with-param name="replacement"><xsl:value-of select="'\\__'" /></xsl:with-param>
                     </xsl:call-template>
                   </xsl:with-param>
-                  <xsl:with-param name="value">{{</xsl:with-param>
-                  <xsl:with-param name="replacement">\{{</xsl:with-param>
+                  <xsl:with-param name="value"><xsl:value-of select="'{{'" /></xsl:with-param>
+                  <xsl:with-param name="replacement"><xsl:value-of select="'\\{{'" /></xsl:with-param>
                 </xsl:call-template>
               </xsl:with-param>
-              <xsl:with-param name="value">}}</xsl:with-param>
-              <xsl:with-param name="replacement">\}}</xsl:with-param>
+              <xsl:with-param name="value"><xsl:value-of select="'}}'" /></xsl:with-param>
+              <xsl:with-param name="replacement"><xsl:value-of select="'\\}}'" /></xsl:with-param>
             </xsl:call-template>
           </xsl:with-param>
-          <xsl:with-param name="value">[[</xsl:with-param>
-          <xsl:with-param name="replacement">\[[</xsl:with-param>
+          <xsl:with-param name="value"><xsl:value-of select="'[['" /></xsl:with-param>
+          <xsl:with-param name="replacement"><xsl:value-of select="'\\[['" /></xsl:with-param>
         </xsl:call-template>
       </xsl:with-param>
-      <xsl:with-param name="value">]]</xsl:with-param>
-      <xsl:with-param name="replacement">\]]</xsl:with-param>
+      <xsl:with-param name="value"><xsl:value-of select="']]'" /></xsl:with-param>
+      <xsl:with-param name="replacement"><xsl:value-of select="'\\]]'" /></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -173,7 +173,7 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'TR') or
                     starts-with($text, 'TRANSITIONAL') or
                     starts-with($text, '(')">
-        <xsl:text>\</xsl:text>
+        <xsl:value-of select="'\\'" />
       </xsl:if>
     </xsl:variable>
 

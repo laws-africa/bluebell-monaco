@@ -46,5 +46,60 @@ DIVISION A. - Cooperation with other conventions
     //Welcomes// the International Plant Protection Convention as a member of the Liaison Group of the Biodiversity-related Conventions and //notes// with appreciation the role of the International Plant Protection Convention in helping to achieve Aichi Biodiversity Target 9;
 `);
     });
+
+    it('should escape when unparsing', () => {
+      const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+      <statement>
+        <mainBody>
+          <p>PART</p>
+          <p>a plain \\ backslash</p>
+          <p>some **text** at //the start// with **multiple //types// of** markup</p>
+          <p>some [[remarks]] and some __underline__</p>
+          <p>include {{^superscripts}} and {{_subscripts}} which are fun</p>
+          <p>an {{IMG /foo.png description}} image</p>
+          <p>PART in the middle</p>
+          <p>PART A should be escaped</p>
+          <p>list __intro__</p>
+          <p>(a) item (a) with a {{>http://example.com link}}</p>
+          <p>CHAPTER.foo</p>
+          <p>QUOTE{}</p>
+          <p>FOOTNOTE 1</p>
+          <p>TABLE in wrapup</p>
+        </mainBody>
+      </statement>
+    </akomaNtoso>`;
+
+      const doc = new DOMParser().parseFromString(xml, "text/xml");
+      const grammar = new BluebellGrammarModel();
+      grammar.setup();
+      expect(grammar.xmlToText(doc)).to.equal(`\\PART
+
+a plain \\\\ backslash
+
+some \\**text\\** at \\//the start\\// with \\**multiple \\//types\\// of\\** markup
+
+some \\[[remarks\\]] and some \\__underline\\__
+
+include \\{{^superscripts\\}} and \\{{_subscripts\\}} which are fun
+
+an \\{{IMG /foo.png description\\}} image
+
+\\PART in the middle
+
+\\PART A should be escaped
+
+list \\__intro\\__
+
+\\(a) item (a) with a \\{{>http:\\//example.com link\\}}
+
+\\CHAPTER.foo
+
+\\QUOTE{}
+
+\\FOOTNOTE 1
+
+\\TABLE in wrapup
+`);
+    });
   });
 });
