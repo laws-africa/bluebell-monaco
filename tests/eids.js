@@ -12,8 +12,8 @@ describe('eIdRewriter', () => {
         <num>A.</num>
         <heading>Cooperation with other conventions</heading>
         <intro>
-          <p eId="dvs_A__p_1"><i>Noting</i> the report of the Executive Secretary on progress,<sup><authorialNote marker="1" placement="bottom" eId="dvs_A__p_1__authorialNote_1"><p eId="dvs_A__p_1__authorialNote_1__p_1">UNEP/CBD/COP/12/24.</p></authorialNote></sup></p>
-          <p eId="dvs_A__p_2"><i>Recalling</i> decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
+          <p eId="dvs_A__intro__p_1"><i>Noting</i> the report of the Executive Secretary on progress,<sup><authorialNote marker="1" placement="bottom" eId="dvs_A__intro__p_1__authorialNote_1"><p eId="dvs_A__intro__p_1__authorialNote_1__p_1">UNEP/CBD/COP/12/24.</p></authorialNote></sup></p>
+          <p eId="dvs_A__intro__p_2"><i>Recalling</i> decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
         </intro>
         <paragraph eId="dvs_A__para_1">
           <num>1.</num>
@@ -37,12 +37,16 @@ describe('eIdRewriter', () => {
             </blockList>
           </content>
         </paragraph>
+        <wrapUp>
+          <p eId="dvs_A__wrapup__p_1">First wrap-up paragraph;</p>
+          <p eId="dvs_A__wrapup__p_2">Second wrap-up paragraph.</p>
+        </wrapUp>
       </division>
       <division eId="dvs_B">
         <num>B.</num>
         <heading>Cooperation with international organizations and initiatives</heading>
         <intro>
-          <p eId="dvs_B__p_1"><i>Recognizing</i> the need for an all-encompassing effort by all relevant processes to achieve the Aichi Biodiversity Targets, taking into account different views and approaches to achieve the conservation and sustainable use of biodiversity and sustainable development,</p>
+          <p eId="dvs_B__intro__p_1"><i>Recognizing</i> the need for an all-encompassing effort by all relevant processes to achieve the Aichi Biodiversity Targets, taking into account different views and approaches to achieve the conservation and sustainable use of biodiversity and sustainable development,</p>
         </intro>
         <paragraph eId="dvs_B__para_13">
           <num>13.</num>
