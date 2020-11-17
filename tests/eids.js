@@ -73,6 +73,26 @@ describe('eIdRewriter', () => {
   <statement name="statement">
     <preface>
       <p eId="preface__p_1">Here is a document:</p>
+      <block name="quote" eId="preface__block_1">
+        <embeddedStructure startQuote="“" eId="preface__block_1__embeddedStructure_1">
+          <paragraph eId="preface__block_1__embeddedStructure_1__para_A">
+            <num>A</num>
+            <heading>Heading</heading>
+            <subparagraph eId="preface__block_1__embeddedStructure_1__para_A__subpara_i">
+              <num>i</num>
+              <content>
+                <p eId="preface__block_1__embeddedStructure_1__para_A__subpara_i__p_1">Content</p>
+              </content>
+            </subparagraph>
+            <subparagraph eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii">
+              <num>ii</num>
+              <content>
+                <p eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1">Content<authorialNote marker="x" placement="bottom" eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1"><p eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__p_1">Here's a footnote, and it Also includes a quote:</p><block name="quote" eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1"><embeddedStructure startQuote="“" eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1"><paragraph eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A"><num>A</num><heading>Heading</heading><subparagraph eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_i"><num>i</num><content><p eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_i__p_1">Content</p></content></subparagraph><subparagraph eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_ii"><num>ii</num><content><p eId="preface__block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_ii__p_1">Content”.</p></content></subparagraph></paragraph></embeddedStructure></block></authorialNote>”.</p>
+              </content>
+            </subparagraph>
+          </paragraph>
+        </embeddedStructure>
+      </block>
     </preface>
     <preamble>
       <p eId="preamble__p_1">
@@ -83,26 +103,6 @@ describe('eIdRewriter', () => {
       <p eId="preamble__p_4">Preamble 3</p>
     </preamble>
     <mainBody>
-      <block name="quote" eId="block_1">
-        <embeddedStructure startQuote="“" eId="block_1__embeddedStructure_1">
-          <paragraph eId="block_1__embeddedStructure_1__para_A">
-            <num>A</num>
-            <heading>Heading</heading>
-            <subparagraph eId="block_1__embeddedStructure_1__para_A__subpara_i">
-              <num>i</num>
-              <content>
-                <p eId="block_1__embeddedStructure_1__para_A__subpara_i__p_1">Content</p>
-              </content>
-            </subparagraph>
-            <subparagraph eId="block_1__embeddedStructure_1__para_A__subpara_ii">
-              <num>ii</num>
-              <content>
-                <p eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1">Content<authorialNote marker="x" placement="bottom" eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1"><p eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__p_1">Here's a footnote, and it Also includes a quote:</p><block name="quote" eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1"><embeddedStructure startQuote="“" eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1"><paragraph eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A"><num>A</num><heading>Heading</heading><subparagraph eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_i"><num>i</num><content><p eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_i__p_1">Content</p></content></subparagraph><subparagraph eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_ii"><num>ii</num><content><p eId="block_1__embeddedStructure_1__para_A__subpara_ii__p_1__authorialNote_1__block_1__embeddedStructure_1__para_A__subpara_ii__p_1">Content”.</p></content></subparagraph></paragraph></embeddedStructure></block></authorialNote>”.</p>
-              </content>
-            </subparagraph>
-          </paragraph>
-        </embeddedStructure>
-      </block>
       <table eId="table_1">
         <tr>
           <th>
@@ -130,18 +130,18 @@ describe('eIdRewriter', () => {
           </td>
         </tr>
       </table>
-      <block name="quote" eId="block_2">
-        <embeddedStructure eId="block_2__embeddedStructure_1">
-          <p eId="block_2__embeddedStructure_1__p_1">Text of quote, introducing this table:</p>
-          <table eId="block_2__embeddedStructure_1__table_1">
+      <block name="quote" eId="block_1">
+        <embeddedStructure eId="block_1__embeddedStructure_1">
+          <p eId="block_1__embeddedStructure_1__p_1">Text of quote, introducing this table:</p>
+          <table eId="block_1__embeddedStructure_1__table_1">
             <tr>
               <th>
-                <p eId="block_2__embeddedStructure_1__table_1__p_1">Head</p>
+                <p eId="block_1__embeddedStructure_1__table_1__p_1">Head</p>
               </th>
             </tr>
             <tr>
               <td>
-                <p eId="block_2__embeddedStructure_1__table_1__p_2">Content</p>
+                <p eId="block_1__embeddedStructure_1__table_1__p_2">Content</p>
               </td>
             </tr>
           </table>
