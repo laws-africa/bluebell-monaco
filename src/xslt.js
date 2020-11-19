@@ -173,7 +173,7 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'TR') or
                     starts-with($text, 'TRANSITIONAL') or
                     starts-with($text, '(')">
-        <xsl:value-of select="'\\'" />
+        <xsl:text>\\</xsl:text>
       </xsl:if>
     </xsl:variable>
 
