@@ -101,5 +101,73 @@ list \\__intro\\__
 \\TABLE in wrapup
 `);
     });
+
+    it('should retain footnotes when unparsing all headings', () => {
+      const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+      <statement>
+        <mainBody>
+          <division eId="dvs_A">
+            <num>A</num>
+            <heading>Heading <authorialNote marker="x" placement="bottom" eId="dvs_A__authorialNote_1"><p eId="dvs_A__authorialNote_1__p_1">Content of footnote.</p></authorialNote></heading>
+            <subheading>Subheading <authorialNote marker="y" placement="bottom" eId="dvs_A__authorialNote_2"><p eId="dvs_A__authorialNote_2__p_1">Content of footnote.</p></authorialNote></subheading>
+            <content>
+              <crossHeading eId="dvs_A__crossHeading_1">A crossheading <authorialNote marker="z" placement="bottom" eId="dvs_A__crossHeading_1__authorialNote_1">
+                  <p eId="dvs_A__crossHeading_1__authorialNote_1__p_1">Content of footnote.</p>
+                </authorialNote></crossHeading>
+              <p eId="dvs_A__p_1">Content of Division A.</p>
+            </content>
+          </division>
+        </mainBody>
+        <attachments>
+          <attachment eId="att_1">
+            <heading>Annex <authorialNote marker="a" placement="bottom" eId="att_1__authorialNote_1"><p eId="att_1__authorialNote_1__p_1">Content of footnote.</p></authorialNote></heading>
+            <subheading>Subheading <authorialNote marker="b" placement="bottom" eId="att_1__authorialNote_2"><p eId="att_1__authorialNote_2__p_1">Content of footnote.</p></authorialNote></subheading>
+            <doc contains="originalVersion" name="annexure">
+              <meta/>
+              <mainBody>
+                <p eId="att_1__p_1">Content of Annex.</p>
+              </mainBody>
+            </doc>
+          </attachment>
+        </attachments>
+      </statement>
+    </akomaNtoso>`;
+
+      const doc = new DOMParser().parseFromString(xml, "text/xml");
+      const grammar = new BluebellGrammarModel();
+      grammar.setup();
+      expect(grammar.xmlToText(doc)).to.equal(`DIVISION A - Heading {{FOOTNOTE x}}
+  SUBHEADING Subheading {{FOOTNOTE y}}
+
+  FOOTNOTE x
+
+    Content of footnote.
+
+  FOOTNOTE y
+
+    Content of footnote.
+
+  CROSSHEADING A crossheading {{FOOTNOTE z}}
+
+  FOOTNOTE z
+
+    Content of footnote.
+
+  Content of Division A.
+
+ANNEXURE Annex {{FOOTNOTE a}}
+  SUBHEADING Subheading {{FOOTNOTE b}}
+
+  FOOTNOTE a
+
+    Content of footnote.
+
+  FOOTNOTE b
+
+    Content of footnote.
+
+  Content of Annex.
+`);
+    });
   });
 });
