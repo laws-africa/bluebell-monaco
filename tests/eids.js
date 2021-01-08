@@ -838,7 +838,7 @@ describe('eIdRewriter', () => {
     });
   });
   describe('#cleanNum()', () => {
-    it('should clean change a document with correct eids', () => {
+    it('should clean nums correctly', () => {
       const r = new EidRewriter();
 
       expect(r.cleanNum("")).to.equal("");
