@@ -16,7 +16,7 @@ describe('eIdRewriter', () => {
           <p eId="dvs_A__p_2"><i>Recalling</i> decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
         </intro>
         <paragraph eId="dvs_A__para_1">
-          <num>1.</num>
+          <num>"1.</num>
           <content>
             <p eId="dvs_A__para_1__p_1"><i>Welcomes</i> the International Plant Protection Convention as a member of the Liaison Group of the Biodiversity-related Conventions and <i>notes</i> with appreciation the role of the International Plant Protection Convention in helping to achieve Aichi Biodiversity Target 9;</p>
           </content>
@@ -63,6 +63,30 @@ describe('eIdRewriter', () => {
       const doc = new DOMParser().parseFromString(xml, "text/xml");
       new EidRewriter().rewriteAllEids(doc);
       expect(new XMLSerializer().serializeToString(doc)).to.equal(xml);
+    });
+  });
+  describe('#cleanNum()', () => {
+    it('should clean change a document with correct eids', () => {
+      const r = new EidRewriter();
+      expect(r.cleanNum("(i)")).to.equal("i");
+      expect(r.cleanNum("[i]")).to.equal("i");
+      expect(r.cleanNum("(2bis)")).to.equal("2bis");
+      expect(r.cleanNum('"1.2.')).to.equal("1-2");
+      expect(r.cleanNum("1.2.")).to.equal("1-2");
+      expect(r.cleanNum("“2.3")).to.equal("2-3");
+      expect(r.cleanNum("2,3")).to.equal("2-3");
+      expect(r.cleanNum("2,3, 4,")).to.equal("2-3-4");
+      expect(r.cleanNum("3a bis")).to.equal("3abis");
+      expect(r.cleanNum("3é")).to.equal("3é");
+      expect(r.cleanNum(" -3a--4,9")).to.equal("3a-4-9");
+    });
+
+    it('should handle non-arabic numerals', () => {
+      const r = new EidRewriter();
+      // hebrew aleph
+      expect(r.cleanNum("(א)")).to.equal("א");
+      // chinese 3
+      expect(r.cleanNum("(三)")).to.equal("三");
     });
   });
 });

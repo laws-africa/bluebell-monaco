@@ -6,8 +6,14 @@ export class EidRewriter {
     this.numExpected = [
       'alinea', 'article', 'book', 'chapter', 'clause', 'division', 'indent', 'item', 'level', 'list', 'paragraph', 'part', 'point', 'proviso', 'rule', 'section', 'subchapter', 'subclause', 'subdivision', 'sublist', 'subparagraph', 'subpart', 'subrule', 'subsection', 'subtitle', 'title', 'tome', 'transitional'
     ];
-    this.numStripRe = /[()\s[\]]/g;
-    this.stopTrimRe = /^\.+|\.+$/g;
+    // leading whitespace and punctuation
+    this.leadingPunctRe = /^[\s\u2000-\u206f\u2e00-\u2e7f!"#$%&'()*+,\-.\/:;<=>?@\[\]^_`{|}~]+/g;
+    // trailing whitespace and punctuation
+    this.trailingPunctRe = /[\s\u2000-\u206f\u2e00-\u2e7f!"#$%&'()*+,\-.\/:;<=>?@\[\]^_`{|}~]+$/g;
+    // whitespace
+    this.whitespaceRe = /\s/g;
+    // general punctuation
+    this.punctRe = /[\u2000-\u206f\u2e00-\u2e7f!"#$%&'()*+,\-.\/:;<=>?@\[\]^_`{|}~]+/g;
     this.elementAliases = {
       'alinea': 'al',
       'amendmentBody': 'body',
@@ -96,8 +102,7 @@ export class EidRewriter {
         eId = (prefix) ? `${prefix}__${shortName}`: shortName,
         nn = false;
     if (!this.idUnnecessary.includes(name)) {
-      // clean num
-      num = num.replace(this.numStripRe, '').replace(this.stopTrimRe, '')
+      num = this.cleanNum(num);
 
       // use e.g. paragraph_nn for unnumbered elements that usually have a num
       if (num === '' && this.numExpected.includes(name)) {
@@ -116,6 +121,34 @@ export class EidRewriter {
       eId = this.ensureUnique(`${eId}_${num}`, nn);
     }
     return eId;
+  }
+
+  /**
+   * Clean a <num> value for use in an eId
+   * See https://docs.oasis-open.org/legaldocml/akn-nc/v1.0/os/akn-nc-v1.0-os.html*_Toc531692306
+   *
+   * "The number part of the identifiers of such elements corresponds to the
+   * stripping of all final punctuation, meaningless separations as well as
+   * redundant characters in the content of the <num> element. The
+   * representation is case-sensitive."
+   *
+   * Our algorithm is:
+   * 1. strip all leading and trailing whitespace and punctuation (using the unicode punctuation blocks)
+   * 2. strip all whitespace
+   * 3. replace all remaining punctuation with a hyphen.
+   *
+   * The General Punctuation block is \u2000-\u206F, and the Supplemental Punctuation block is \u2E00-\u2E7F.
+   *
+   * (i) -> i
+   * 1.2. -> 1-2
+   * “2.3“ -> 2-3
+   * 3a bis -> 3abis
+   */
+  cleanNum (num) {
+    return num.replace(this.leadingPunctRe, '')
+      .replace(this.trailingPunctRe, '')
+      .replace(this.whitespaceRe, '')
+      .replace(this.punctRe, '-');
   }
 
   /** Ensures a given eId is unique; adds the count to `nn` and non-unique eids.
