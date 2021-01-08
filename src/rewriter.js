@@ -50,6 +50,7 @@ export class EidRewriter {
       'temporalGroup': 'tmpg',
       'wrapUp': 'wrapup',
     };
+    this.idUnnecessaryButPassToChildren = ['intro', 'wrapUp'];
   }
 
   /** Rewrites the eIds for all nodes in the tree.
@@ -86,9 +87,14 @@ export class EidRewriter {
       }
 
       // keep drilling down
+      // (use the new eId as the prefix if there is one, or default to the parent;
+      // include the current tag in the prefix if needed)
+      prefix = newEid || prefix;
+      if (this.idUnnecessaryButPassToChildren.includes(element.tagName)) {
+        prefix = `${prefix}__${element.tagName.toLowerCase()}`;
+      }
       for (let i = 0; i < element.children.length; i++) {
-        // use the new eId as the prefix if there is one or default to the parent
-        this.rewriteElement(element.children[i], newEid || prefix)
+        this.rewriteElement(element.children[i], prefix)
       }
     }
   }
