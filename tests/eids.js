@@ -68,6 +68,15 @@ describe('eIdRewriter', () => {
   describe('#cleanNum()', () => {
     it('should clean change a document with correct eids', () => {
       const r = new EidRewriter();
+
+      expect(r.cleanNum("")).to.equal("");
+      expect(r.cleanNum(" ")).to.equal("");
+      expect(r.cleanNum("( )")).to.equal("");
+      expect(r.cleanNum("(123.4-5)")).to.equal("123-4-5");
+      expect(r.cleanNum("(312.32.7)")).to.equal("312-32-7");
+      expect(r.cleanNum("(312_32_7)")).to.equal("312-32-7");
+      expect(r.cleanNum("(6)")).to.equal("6");
+      expect(r.cleanNum("[16]")).to.equal("16");
       expect(r.cleanNum("(i)")).to.equal("i");
       expect(r.cleanNum("[i]")).to.equal("i");
       expect(r.cleanNum("(2bis)")).to.equal("2bis");
