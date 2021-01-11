@@ -16,7 +16,7 @@ describe('eIdRewriter', () => {
           <p eId="dvs_A__intro__p_2"><i>Recalling</i> decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
         </intro>
         <paragraph eId="dvs_A__para_1">
-          <num>1.</num>
+          <num>"1.</num>
           <content>
             <p eId="dvs_A__para_1__p_1"><i>Welcomes</i> the International Plant Protection Convention as a member of the Liaison Group of the Biodiversity-related Conventions and <i>notes</i> with appreciation the role of the International Plant Protection Convention in helping to achieve Aichi Biodiversity Target 9;</p>
           </content>
@@ -158,67 +158,67 @@ describe('eIdRewriter', () => {
           <subdivision eId="dvs_1__para_1__subdvs_A">
             <num>A.</num>
             <heading>Subdiv</heading>
-            <paragraph eId="dvs_1__para_1__subdvs_A__para_1.1">
+            <paragraph eId="dvs_1__para_1__subdvs_A__para_1-1">
               <num>1.1</num>
               <heading>Heading</heading>
               <intro>
-                <p eId="dvs_1__para_1__subdvs_A__para_1.1__intro__p_1">Content:</p>
+                <p eId="dvs_1__para_1__subdvs_A__para_1-1__intro__p_1">Content:</p>
               </intro>
-              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1.1__subpara_a">
+              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1-1__subpara_a">
                 <num>a</num>
                 <content>
-                  <p eId="dvs_1__para_1__subdvs_A__para_1.1__subpara_a__p_1">Content</p>
+                  <p eId="dvs_1__para_1__subdvs_A__para_1-1__subpara_a__p_1">Content</p>
                 </content>
               </subparagraph>
-              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1.1__subpara_b">
+              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1-1__subpara_b">
                 <num>b</num>
                 <content>
-                  <p eId="dvs_1__para_1__subdvs_A__para_1.1__subpara_b__p_1">Content</p>
+                  <p eId="dvs_1__para_1__subdvs_A__para_1-1__subpara_b__p_1">Content</p>
                 </content>
               </subparagraph>
               <wrapUp>
-                <p eId="dvs_1__para_1__subdvs_A__para_1.1__wrapup__p_1">Wrap</p>
+                <p eId="dvs_1__para_1__subdvs_A__para_1-1__wrapup__p_1">Wrap</p>
               </wrapUp>
             </paragraph>
-            <paragraph eId="dvs_1__para_1__subdvs_A__para_1.2">
+            <paragraph eId="dvs_1__para_1__subdvs_A__para_1-2">
               <num>1.2</num>
-              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a">
+              <subparagraph eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a">
                 <num>a</num>
-                <subparagraph eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_i">
+                <subparagraph eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_i">
                   <num>i</num>
                   <content>
-                    <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_i__p_1">Content</p>
+                    <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_i__p_1">Content</p>
                   </content>
                 </subparagraph>
-                <subparagraph eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii">
+                <subparagraph eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii">
                   <num>ii</num>
-                  <list eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1">
-                    <point eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1__point_1">
+                  <list eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1">
+                    <point eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1__point_1">
                       <num>1</num>
                       <content>
-                        <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1__point_1__p_1">Content</p>
+                        <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1__point_1__p_1">Content</p>
                       </content>
                     </point>
-                    <point eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1__point_2">
+                    <point eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1__point_2">
                       <num>2</num>
                       <content>
-                        <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1__point_2__p_1">Content</p>
+                        <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1__point_2__p_1">Content</p>
                       </content>
                     </point>
                     <wrapUp>
-                      <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__list_nn_1__wrapup__p_1">Wrap</p>
+                      <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__list_nn_1__wrapup__p_1">Wrap</p>
                     </wrapUp>
                   </list>
                   <wrapUp>
-                    <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__subpara_ii__wrapup__p_1">Rando text in subpara ii</p>
+                    <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__subpara_ii__wrapup__p_1">Rando text in subpara ii</p>
                   </wrapUp>
                 </subparagraph>
                 <wrapUp>
-                  <p eId="dvs_1__para_1__subdvs_A__para_1.2__subpara_a__wrapup__p_1">Rando text in subpara a</p>
+                  <p eId="dvs_1__para_1__subdvs_A__para_1-2__subpara_a__wrapup__p_1">Rando text in subpara a</p>
                 </wrapUp>
               </subparagraph>
               <wrapUp>
-                <p eId="dvs_1__para_1__subdvs_A__para_1.2__wrapup__p_1">Rando text in para 1.2</p>
+                <p eId="dvs_1__para_1__subdvs_A__para_1-2__wrapup__p_1">Rando text in para 1.2</p>
               </wrapUp>
             </paragraph>
             <wrapUp>
@@ -835,6 +835,39 @@ describe('eIdRewriter', () => {
       const doc = new DOMParser().parseFromString(xml, "text/xml");
       new EidRewriter().rewriteAllEids(doc);
       expect(new XMLSerializer().serializeToString(doc)).to.equal(xml);
+    });
+  });
+  describe('#cleanNum()', () => {
+    it('should clean nums correctly', () => {
+      const r = new EidRewriter();
+
+      expect(r.cleanNum("")).to.equal("");
+      expect(r.cleanNum(" ")).to.equal("");
+      expect(r.cleanNum("( )")).to.equal("");
+      expect(r.cleanNum("(123.4-5)")).to.equal("123-4-5");
+      expect(r.cleanNum("(312.32.7)")).to.equal("312-32-7");
+      expect(r.cleanNum("(312_32_7)")).to.equal("312-32-7");
+      expect(r.cleanNum("(6)")).to.equal("6");
+      expect(r.cleanNum("[16]")).to.equal("16");
+      expect(r.cleanNum("(i)")).to.equal("i");
+      expect(r.cleanNum("[i]")).to.equal("i");
+      expect(r.cleanNum("(2bis)")).to.equal("2bis");
+      expect(r.cleanNum('"1.2.')).to.equal("1-2");
+      expect(r.cleanNum("1.2.")).to.equal("1-2");
+      expect(r.cleanNum("“2.3")).to.equal("2-3");
+      expect(r.cleanNum("2,3")).to.equal("2-3");
+      expect(r.cleanNum("2,3, 4,")).to.equal("2-3-4");
+      expect(r.cleanNum("3a bis")).to.equal("3abis");
+      expect(r.cleanNum("3é")).to.equal("3é");
+      expect(r.cleanNum(" -3a--4,9")).to.equal("3a-4-9");
+    });
+
+    it('should handle non-arabic numerals', () => {
+      const r = new EidRewriter();
+      // hebrew aleph
+      expect(r.cleanNum("(א)")).to.equal("א");
+      // chinese 3
+      expect(r.cleanNum("(三)")).to.equal("三");
     });
   });
 });
