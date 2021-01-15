@@ -21,6 +21,12 @@ export class BluebellActions {
       run: this.formatItalic.bind(this)
     });
     editor.addAction({
+      id: 'format.underline',
+      label: 'Underline',
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_U],
+      run: this.formatUnderline.bind(this)
+    });
+    editor.addAction({
       id: 'format.superscript',
       label: 'Superscript',
       run: this.formatSuperscript.bind(this)
@@ -51,6 +57,12 @@ export class BluebellActions {
   formatItalic (editor) {
     editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.italic', '//', '//');
+    editor.pushUndoStop();
+  }
+
+  formatUnderline (editor) {
+    editor.pushUndoStop();
+    wrapSelection(editor, this.editSource, 'format.italic', '__', '__');
     editor.pushUndoStop();
   }
 
