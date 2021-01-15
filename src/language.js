@@ -18,6 +18,9 @@ export const LANGUAGE_DEF = {
       // single line headings
       [/^(\s*)(@headings)(\s.*)$/, ['white', 'keyword.heading', 'string']],
 
+      // footnote marker
+      [/^(\s*)(FOOTNOTE)(\s.+)$/, ['white', 'keyword.heading', 'number']],
+
       // hierarchical
       // PARA
       [/^\s*@hier\s*$/, 'keyword.hier'],
