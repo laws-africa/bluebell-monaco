@@ -62,7 +62,7 @@ export class BluebellActions {
 
   formatUnderline (editor) {
     editor.pushUndoStop();
-    wrapSelection(editor, this.editSource, 'format.italic', '__', '__');
+    wrapSelection(editor, this.editSource, 'format.underline', '__', '__');
     editor.pushUndoStop();
   }
 
