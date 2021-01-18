@@ -18,6 +18,9 @@ export const LANGUAGE_DEF = {
       // single line headings
       [/^(\s*)(@headings)(\s.*)$/, ['white', 'keyword.heading', 'string']],
 
+      // footnote marker
+      [/^(\s*)(FOOTNOTE)(\s.+)$/, ['white', 'keyword.heading', 'number']],
+
       // hierarchical
       // PARA
       [/^\s*@hier\s*$/, 'keyword.hier'],
@@ -34,6 +37,7 @@ export const LANGUAGE_DEF = {
       // inlines
       [/\*\*.*?\*\*/, 'inline.bold'],
       [/\/\/.*?\/\//, 'inline.italic'],
+      [/__.*?__/, 'inline.underline'],
       [/{{\^.*?}}/, 'inline.superscript'],
       [/{{_.*?}}/, 'inline.subscript'],
       [/{{>.*?}}/, 'inline.ref'],
@@ -54,7 +58,7 @@ export const THEME_DEF = {
     { token: 'inline.bold', fontStyle: 'bold' },
     { token: 'inline.italic', fontStyle: 'italic' },
     { token: 'inline.ref', fontStyle: 'underline', foreground: 'ffa500' },
-    { token: 'inline.underline', fontStyle: 'text-decoration: underline' }
+    { token: 'inline.underline', fontStyle: 'underline' },
   ]
 };
 
