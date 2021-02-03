@@ -39,5 +39,13 @@ PART 1 - Heading
       theme: THEME_ID
     });
     installActions(editor);
+
+    // bind buttons
+    for (let btn of document.querySelectorAll('.actions button[data-action]')) {
+      btn.addEventListener('click', e => {
+        editor.trigger('bluebell-monaco', btn.getAttribute('data-action'));
+        editor.focus();
+      });
+    }
   })
 });
