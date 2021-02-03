@@ -25,6 +25,8 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-webpack": "^4.0.2",
     "mocha": "^8.2.0",
-    "webpack": "^4.4.2"
+    "monaco-editor": "0.22.3",
+    "webpack": "^4.4.2",
+    "webpack-cli": "^4.5.0"
   }
 }
