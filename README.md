@@ -39,12 +39,23 @@ Once you have created a monaco editor instance, setup Bluebell-related edit acti
 ```js
 import { installActions } from "bluebell-monaco";
 installActions(editor);
+
+// trigger the format.bold action
+editor.trigger('your-app', 'format.bold');
 ```
 
 ## Running tests
 
 1. Install dependencies: `npm install`
 2. Run tests: `npm test`
+
+## Running demo
+
+There's a small demo editor to test functionality. To use it:
+
+1. `cd demo`
+2. `npx webpack`
+3. run `demo/index.html` in PyCharm to launch a webserver
 
 ## Releasing a new version
 
