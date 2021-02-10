@@ -165,35 +165,30 @@ export class BluebellActions {
         return;
       }
 
-      // are there no other ranges, or is the selection entirely contained in a range?
-      if (ranges.length === 0 || ranges.some(r => r.containsRange(range))) {
-        // wholly contained - break range by wrapping
-        wrapSelection(editor, edit_source, id, pre, post);
+      // is the selection entirely outside all ranges?
+      if (ranges.length === 0 || ranges.every(r => !monaco.Range.areIntersecting(range, r))) {
+        wrapRange(range, editor, edit_source, id, pre, post);
         return;
       }
 
-      // is the selection entirely outside a range?
-      for (let i = 0; i < ranges.length; i++) {
-        const [start, end] = ranges[i];
-
-        if (
-          // wholly before first range
-          (i === 0 && start >= selEnd) ||
-          // wholly after last range
-          (i === ranges.length - 1 && end <= selStart) ||
-          // wholly between ranges
-          (
-            (end <= selStart) &&
-            (i === ranges.length - 1 || ranges[i+1][0] >= selEnd)
-          )
-        ) {
-          // wholly contained, wrap
-          wrapSelection(editor, edit_source, id, pre, post);
-          return;
-        }
+      // is the selection entirely entirely inside a range?
+      if (ranges.some(r => r.containsRange(range))) {
+        // Wrap the selection. This works because the start and end markers are the same, so unwrapping a portion
+        // inside a wrapped range is actually the same as wrapping it
+        wrapRange(range, editor, edit_source, id, pre, post);
+        return;
       }
 
-      // does the selection cover either a starting wrap, or an ending wrap?
+      // The selection covers multiple ranges. Expand our range to cover them all, unwrap each individually,
+      // then wrap the whole thing. We do it in reverse so that we don't need to adjust ranges as they are
+      // unwrapped (since the text changes).
+      for (let r of ranges.reverse()) {
+        if (monaco.Range.areIntersectingOrTouching(r, range)) {
+          unwrapRange(r, editor, edit_source, id, pre, post);
+          range = range.plusRange(r);
+        }
+      }
+      wrapRange(range, editor, edit_source, id, pre, post);
 
     } else {
       // markers are asymmetrical, eg {{^super}}
@@ -283,7 +278,7 @@ export function indentAtSelection (editor, sel) {
 }
 
 /**
- * Removes the pre and post markers from the given range, an updates the cursor to cover the updated text.
+ * Removes the pre and post markers from the given range, and updates the cursor to cover the updated text.
  */
 export function unwrapRange (range, editor, edit_source, id, pre, post) {
   // strip pre and post
@@ -294,7 +289,34 @@ export function unwrapRange (range, editor, edit_source, id, pre, post) {
     text: text,
   };
   const cursor = new monaco.Selection(
-    range.startLineNumber, range.startColumn, range.endLineNumber,
-    range.endColumn - pre.length - post.length);
+    range.startLineNumber, range.startColumn,
+    range.endLineNumber, range.endColumn - pre.length - post.length);
+  editor.executeEdits(edit_source, [op], [cursor]);
+}
+
+/**
+ * Wraps a range with pre and post markers, and updates the cursor to cover the updated text.
+ */
+export function wrapRange (range, editor, edit_source, id, pre, post) {
+  const text = editor.getModel().getValueInRange(range);
+  const op = {
+    identifier: id,
+    range: range,
+    text: pre + text + post
+  };
+  let cursor;
+
+  if (text.length === 0) {
+    // put cursor inside tags
+    cursor = new monaco.Selection(
+      range.startLineNumber, range.startColumn + pre.length,
+      range.startLineNumber, range.startColumn + pre.length);
+  } else {
+    // extend selection
+    cursor = new monaco.Selection(
+      range.startLineNumber, range.startColumn,
+      range.endLineNumber, range.startColumn + pre.length + text.length + post.length);
+  }
+
   editor.executeEdits(edit_source, [op], [cursor]);
 }
