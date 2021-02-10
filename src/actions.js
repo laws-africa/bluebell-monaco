@@ -251,7 +251,16 @@ export class BluebellActions {
    * @param lineNumber line number to use for the ranges
    */
   getMarkedInlineRanges (line, marker, lineNumber) {
-    const ranges = [];
+    // map indexes to ranges
+    // we delegate to a simpler function which we can test without needing monaco.Ranges installed
+    return this.getMarkedInlineIndexes(line, marker).map(([start, end]) => {
+      // range columns start at 1, and the end column is excluded
+      return new monaco.Range(lineNumber, start + 1, lineNumber, end + 2);
+    });
+  }
+
+  getMarkedInlineIndexes (line, marker) {
+    const pairs = [];
     const indexes = [];
     let ix = line.indexOf(marker);
 
@@ -263,13 +272,10 @@ export class BluebellActions {
 
     // group into pairs
     for (let i = 0; i < indexes.length - 1; i += 2) {
-      ranges.push(new monaco.Range(
-        // columns start at 1
-        lineNumber, indexes[i] + 1,
-        lineNumber,indexes[i + 1] + marker.length + 1));
+      pairs.push([indexes[i], indexes[i + 1] + marker.length - 1]);
     }
 
-    return ranges;
+    return pairs;
   }
 
   /**
