@@ -50,19 +50,19 @@ export class BluebellActions {
 
   formatBold (editor) {
     editor.pushUndoStop();
-    this.toggleWrapSelection(editor, this.editSource, 'format.bold', '**', '**');
+    this.toggleWrapSelection(editor, this.editSource, 'format.bold', '**');
     editor.pushUndoStop();
   }
 
   formatItalic (editor) {
     editor.pushUndoStop();
-    wrapSelection(editor, this.editSource, 'format.italic', '//', '//');
+    this.toggleWrapSelection(editor, this.editSource, 'format.italic', '//');
     editor.pushUndoStop();
   }
 
   formatUnderline (editor) {
     editor.pushUndoStop();
-    wrapSelection(editor, this.editSource, 'format.underline', '__', '__');
+    this.toggleWrapSelection(editor, this.editSource, 'format.underline', '__');
     editor.pushUndoStop();
   }
 
@@ -133,68 +133,82 @@ export class BluebellActions {
   }
 
   /**
-   * Toggle between wrapping the selection with pre and post markers, and removing them.
+   * Toggle between wrapping the selection with a symmetrical marker, and removing it. Returns the updated range.
    *
    * The following rules apply:
    *
    * 1. if the selection is wholly within a range, split the range
    * 2. if the selection is wholly outside a range, wrap (or combine adjacent ranges, if necessary)
    * 3. if the selection covers either a starting wrap or an ending wrap, then fully wrap the selection
+   *
+   * @param editor monaco editor instance
+   * @param edit_source source of the edits
+   * @param id id of the edits
+   * @param marker text to use as both pre and post marker
+   *
+   * @returns {monaco.Range}
    */
-  toggleWrapSelection (editor, edit_source, id, pre, post) {
+  toggleWrapSelection (editor, edit_source, id, marker) {
     const sel = editor.getSelection();
+    const model = editor.getModel();
+    let newSelection = null;
 
-    // TODO: handle multiple lines?
-    // monaco columns are 1-based
-    let selStart = sel.startColumn - 1;
-    let selEnd = Math.max(selStart, sel.endColumn - 2);
-    let range = new monaco.Range(sel.startLineNumber, sel.startColumn, sel.startLineNumber, sel.endColumn);
-    const line = editor.getModel().getLineContent(sel.getStartPosition().lineNumber);
+    // handle multiple lines of selection
+    for (let lineNumber = sel.startLineNumber; lineNumber <= sel.endLineNumber; lineNumber++) {
+      const line = model.getLineContent(lineNumber);
 
-    if (pre === post) {
-      // markers are symmetrical, eg. **bold**
-      const ranges = this.getMarkedInlineRanges(line, pre, range.startLineNumber);
+      // range to mutate on this line
+      let range = new monaco.Range(
+        lineNumber, lineNumber === sel.startLineNumber ? sel.startColumn : model.getLineFirstNonWhitespaceColumn(lineNumber),
+        lineNumber, lineNumber === sel.endLineNumber ? sel.endColumn : line.length + 1);
 
-      // expand the range if necessary to cover markers
-      range = this.normaliseRange(range, ranges, pre.length, post.length);
-
-      // is the selection exactly a range?
-      if (ranges.some(r => range.equalsRange(r))) {
-        // remove the range by unwrapping
-        unwrapRange(range, editor, edit_source, id, pre, post);
-        return;
-      }
-
-      // is the selection entirely outside all ranges?
-      if (ranges.length === 0 || ranges.every(r => !monaco.Range.areIntersecting(range, r))) {
-        wrapRange(range, editor, edit_source, id, pre, post);
-        return;
-      }
-
-      // is the selection entirely entirely inside a range?
-      if (ranges.some(r => r.containsRange(range))) {
-        // Wrap the selection. This works because the start and end markers are the same, so unwrapping a portion
-        // inside a wrapped range is actually the same as wrapping it
-        wrapRange(range, editor, edit_source, id, pre, post);
-        return;
-      }
-
-      // The selection covers multiple ranges. Expand our range to cover them all, unwrap each individually,
-      // then wrap the whole thing. We do it in reverse so that we don't need to adjust ranges as they are
-      // unwrapped (since the text changes).
-      for (let r of ranges.reverse()) {
-        if (monaco.Range.areIntersectingOrTouching(r, range)) {
-          unwrapRange(r, editor, edit_source, id, pre, post);
-          range = range.plusRange(r);
-        }
-      }
-      wrapRange(range, editor, edit_source, id, pre, post);
-
-    } else {
-      // markers are asymmetrical, eg {{^super}}
-      // not yet supported
-      wrapSelection(editor, edit_source, id, pre, post);
+      range = this.toggleWrapSelectionOnLine(editor, edit_source, id, marker, range);
+      newSelection = newSelection ? newSelection.plusRange(range) : range;
     }
+
+    editor.setSelection(newSelection);
+  }
+
+  /**
+   * Toggle between wrapping a range on a line with a symmetrical marker, and removing it. Returns the updated range.
+   *
+   * @returns {monaco.Range}
+   */
+  toggleWrapSelectionOnLine (editor, edit_source, id, marker, range) {
+    const line = editor.getModel().getLineContent(range.startLineNumber);
+    const ranges = this.getMarkedInlineRanges(line, marker, range.startLineNumber);
+
+    // expand the range if necessary to cover markers
+    range = this.normaliseRange(range, ranges, marker.length, marker.length);
+
+    // is the selection exactly a range?
+    if (ranges.some(r => range.equalsRange(r))) {
+      // remove the range by unwrapping
+      return this.unwrapRange(range, editor, edit_source, id, marker, marker);
+    }
+
+    // is the selection entirely outside all ranges?
+    if (ranges.length === 0 || ranges.every(r => !monaco.Range.areIntersecting(range, r))) {
+      return this.wrapRange(range, editor, edit_source, id, marker, marker);
+    }
+
+    // is the selection entirely entirely inside a range?
+    if (ranges.some(r => r.containsRange(range))) {
+      // Wrap the selection. This works because the start and end markers are the same, so unwrapping a portion
+      // inside a wrapped range is actually the same as wrapping it
+      return this.wrapRange(range, editor, edit_source, id, marker, marker);
+    }
+
+    // The selection covers multiple ranges. Expand our range to cover them all, unwrap each individually,
+    // then wrap the whole thing. We do it in reverse so that we don't need to adjust ranges as they are
+    // unwrapped (since the text changes).
+    for (let r of ranges.reverse()) {
+      if (monaco.Range.areIntersectingOrTouching(r, range)) {
+        this.unwrapRange(r, editor, edit_source, id, marker, marker);
+        range = range.plusRange(r);
+      }
+    }
+    return this.wrapRange(range, editor, edit_source, id, marker, marker);
   }
 
   /**
@@ -203,6 +217,8 @@ export class BluebellActions {
    * @param ranges ranges to compare with
    * @param startTolerance tolerance for distance from start (inside range)
    * @param endTolerance tolerance for distance from end (inside range)
+   *
+   * @returns {monaco.Range}
    */
   normaliseRange (range, ranges, startTolerance, endTolerance) {
     for (let r of ranges) {
@@ -255,6 +271,58 @@ export class BluebellActions {
 
     return ranges;
   }
+
+  /**
+   * Removes the pre and post markers from the given range, and updates the cursor to cover the updated text.
+   * Returns the updated cursor selection.
+   *
+   * @returns {monaco.Range}
+   */
+  unwrapRange (range, editor, edit_source, id, pre, post) {
+    // strip pre and post
+    const text = editor.getModel().getValueInRange(range).slice(pre.length, -post.length);
+    const op = {
+      identifier: id,
+      range: range,
+      text: text,
+    };
+    const cursor = new monaco.Selection(
+      range.startLineNumber, range.startColumn,
+      range.endLineNumber, range.endColumn - pre.length - post.length);
+    editor.executeEdits(edit_source, [op], [cursor]);
+    return cursor;
+  }
+
+  /**
+   * Wraps a range with pre and post markers, and updates the cursor to cover the updated text.
+   * Returns the updated cursor selection.
+   *
+   * @returns {monaco.Range}
+   */
+  wrapRange (range, editor, edit_source, id, pre, post) {
+    const text = editor.getModel().getValueInRange(range);
+    const op = {
+      identifier: id,
+      range: range,
+      text: pre + text + post
+    };
+    let cursor;
+
+    if (text.length === 0) {
+      // put cursor inside tags
+      cursor = new monaco.Selection(
+        range.startLineNumber, range.startColumn + pre.length,
+        range.startLineNumber, range.startColumn + pre.length);
+    } else {
+      // extend selection
+      cursor = new monaco.Selection(
+        range.startLineNumber, range.startColumn,
+        range.endLineNumber, range.startColumn + pre.length + text.length + post.length);
+    }
+
+    editor.executeEdits(edit_source, [op], [cursor]);
+    return cursor;
+  }
 }
 
 /**
@@ -277,46 +345,3 @@ export function indentAtSelection (editor, sel) {
   return indent;
 }
 
-/**
- * Removes the pre and post markers from the given range, and updates the cursor to cover the updated text.
- */
-export function unwrapRange (range, editor, edit_source, id, pre, post) {
-  // strip pre and post
-  const text = editor.getModel().getValueInRange(range).slice(pre.length, -post.length);
-  const op = {
-    identifier: id,
-    range: range,
-    text: text,
-  };
-  const cursor = new monaco.Selection(
-    range.startLineNumber, range.startColumn,
-    range.endLineNumber, range.endColumn - pre.length - post.length);
-  editor.executeEdits(edit_source, [op], [cursor]);
-}
-
-/**
- * Wraps a range with pre and post markers, and updates the cursor to cover the updated text.
- */
-export function wrapRange (range, editor, edit_source, id, pre, post) {
-  const text = editor.getModel().getValueInRange(range);
-  const op = {
-    identifier: id,
-    range: range,
-    text: pre + text + post
-  };
-  let cursor;
-
-  if (text.length === 0) {
-    // put cursor inside tags
-    cursor = new monaco.Selection(
-      range.startLineNumber, range.startColumn + pre.length,
-      range.startLineNumber, range.startColumn + pre.length);
-  } else {
-    // extend selection
-    cursor = new monaco.Selection(
-      range.startLineNumber, range.startColumn,
-      range.endLineNumber, range.startColumn + pre.length + text.length + post.length);
-  }
-
-  editor.executeEdits(edit_source, [op], [cursor]);
-}
