@@ -50,7 +50,7 @@ export class BluebellActions {
 
   formatBold (editor) {
     editor.pushUndoStop();
-    wrapSelection(editor, this.editSource, 'format.bold', '**', '**');
+    this.toggleWrapSelection(editor, this.editSource, 'format.bold', '**', '**');
     editor.pushUndoStop();
   }
 
@@ -131,6 +131,135 @@ export class BluebellActions {
     }]);
     editor.pushUndoStop();
   }
+
+  /**
+   * Toggle between wrapping the selection with pre and post markers, and removing them.
+   *
+   * The following rules apply:
+   *
+   * 1. if the selection is wholly within a range, split the range
+   * 2. if the selection is wholly outside a range, wrap (or combine adjacent ranges, if necessary)
+   * 3. if the selection covers either a starting wrap or an ending wrap, then fully wrap the selection
+   */
+  toggleWrapSelection (editor, edit_source, id, pre, post) {
+    const sel = editor.getSelection();
+
+    // TODO: handle multiple lines?
+    // monaco columns are 1-based
+    let selStart = sel.startColumn - 1;
+    let selEnd = Math.max(selStart, sel.endColumn - 2);
+    let range = new monaco.Range(sel.startLineNumber, sel.startColumn, sel.startLineNumber, sel.endColumn);
+    const line = editor.getModel().getLineContent(sel.getStartPosition().lineNumber);
+
+    if (pre === post) {
+      // markers are symmetrical, eg. **bold**
+      const ranges = this.getMarkedInlineRanges(line, pre, range.startLineNumber);
+
+      // expand the range if necessary to cover markers
+      range = this.normaliseRange(range, ranges, pre.length, post.length);
+
+      // is the selection exactly a range?
+      if (ranges.some(r => range.equalsRange(r))) {
+        // remove the range by unwrapping
+        unwrapRange(range, editor, edit_source, id, pre, post);
+        return;
+      }
+
+      // are there no other ranges, or is the selection entirely contained in a range?
+      if (ranges.length === 0 || ranges.some(r => r.containsRange(range))) {
+        // wholly contained - break range by wrapping
+        wrapSelection(editor, edit_source, id, pre, post);
+        return;
+      }
+
+      // is the selection entirely outside a range?
+      for (let i = 0; i < ranges.length; i++) {
+        const [start, end] = ranges[i];
+
+        if (
+          // wholly before first range
+          (i === 0 && start >= selEnd) ||
+          // wholly after last range
+          (i === ranges.length - 1 && end <= selStart) ||
+          // wholly between ranges
+          (
+            (end <= selStart) &&
+            (i === ranges.length - 1 || ranges[i+1][0] >= selEnd)
+          )
+        ) {
+          // wholly contained, wrap
+          wrapSelection(editor, edit_source, id, pre, post);
+          return;
+        }
+      }
+
+      // does the selection cover either a starting wrap, or an ending wrap?
+
+    } else {
+      // markers are asymmetrical, eg {{^super}}
+      // not yet supported
+      wrapSelection(editor, edit_source, id, pre, post);
+    }
+  }
+
+  /**
+   * Expand a range if it's at the edges of an existing range, or is an empty range inside an existing range.
+   * @param range range to check
+   * @param ranges ranges to compare with
+   * @param startTolerance tolerance for distance from start (inside range)
+   * @param endTolerance tolerance for distance from end (inside range)
+   */
+  normaliseRange (range, ranges, startTolerance, endTolerance) {
+    for (let r of ranges) {
+      // if it's an empty selection within a range, expand to cover the full range
+      if (range.isEmpty() && r.containsRange(range)) {
+        return r;
+      }
+
+      // if the selection is within the tolerance of the edges of a range, expand it to cover the full range
+      let diff = range.startColumn - r.startColumn;
+      if (diff > 0 && diff <= startTolerance) {
+        range = range.setStartPosition(range.startLineNumber, r.startColumn);
+      }
+
+      diff = r.endColumn - range.endColumn;
+      if (diff > 0 && diff <= endTolerance) {
+        range = range.setEndPosition(range.endLineNumber, r.endColumn);
+      }
+    }
+
+    return range;
+  }
+
+  /**
+   * Get an ordered list of Range objects, identifying inline markup in a line of text. Only supports symmetrical
+   * inline markers.
+   *
+   * @param line a single line of text
+   * @param marker start (and end) marker string to look for
+   * @param lineNumber line number to use for the ranges
+   */
+  getMarkedInlineRanges (line, marker, lineNumber) {
+    const ranges = [];
+    const indexes = [];
+    let ix = line.indexOf(marker);
+
+    // find all occurrences
+    while (ix > -1) {
+      indexes.push(ix);
+      ix = line.indexOf(marker, ix + marker.length);
+    }
+
+    // group into pairs
+    for (let i = 0; i < indexes.length - 1; i += 2) {
+      ranges.push(new monaco.Range(
+        // columns start at 1
+        lineNumber, indexes[i] + 1,
+        lineNumber,indexes[i + 1] + marker.length + 1));
+    }
+
+    return ranges;
+  }
 }
 
 /**
@@ -151,4 +280,21 @@ export function indentAtSelection (editor, sel) {
     indent = sel.startColumn;
   }
   return indent;
+}
+
+/**
+ * Removes the pre and post markers from the given range, an updates the cursor to cover the updated text.
+ */
+export function unwrapRange (range, editor, edit_source, id, pre, post) {
+  // strip pre and post
+  const text = editor.getModel().getValueInRange(range).slice(pre.length, -post.length);
+  const op = {
+    identifier: id,
+    range: range,
+    text: text,
+  };
+  const cursor = new monaco.Selection(
+    range.startLineNumber, range.startColumn, range.endLineNumber,
+    range.endColumn - pre.length - post.length);
+  editor.executeEdits(edit_source, [op], [cursor]);
 }
