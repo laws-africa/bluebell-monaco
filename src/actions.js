@@ -135,17 +135,6 @@ export class BluebellActions {
   /**
    * Toggle between wrapping the selection with a symmetrical marker, and removing it. Returns the updated range.
    *
-   * The following rules apply:
-   *
-   * 1. if the selection is wholly within a range, split the range
-   * 2. if the selection is wholly outside a range, wrap (or combine adjacent ranges, if necessary)
-   * 3. if the selection covers either a starting wrap or an ending wrap, then fully wrap the selection
-   *
-   * @param editor monaco editor instance
-   * @param edit_source source of the edits
-   * @param id id of the edits
-   * @param marker text to use as both pre and post marker
-   *
    * @returns {monaco.Range}
    */
   toggleWrapSelection (editor, edit_source, id, marker) {
@@ -171,6 +160,18 @@ export class BluebellActions {
 
   /**
    * Toggle between wrapping a range on a line with a symmetrical marker, and removing it. Returns the updated range.
+   *
+   * The following rules apply:
+   *
+   * 1. if the selection is wholly within a range, split the range
+   * 2. if the selection is wholly outside a range, wrap (or combine adjacent ranges, if necessary)
+   * 3. if the selection covers either a starting wrap or an ending wrap, then fully wrap the selection
+   *
+   * @param editor monaco editor instance
+   * @param edit_source source of the edits
+   * @param id id of the edits
+   * @param marker text to use as both pre and post marker
+   * @param range the range to toggle
    *
    * @returns {monaco.Range}
    */
