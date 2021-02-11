@@ -72,4 +72,4 @@ export function registerLanguage () {
   monaco.languages.register({id: LANGUAGE_ID});
   monaco.languages.setMonarchTokensProvider(LANGUAGE_ID, LANGUAGE_DEF);
   monaco.editor.defineTheme(THEME_ID, THEME_DEF);
-};
+}
