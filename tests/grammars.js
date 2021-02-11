@@ -19,6 +19,14 @@ describe('BluebellGrammarModel', () => {
           <num>1.</num>
           <content>
             <p eId="dvs_A__para_1__p_1"><i>Welcomes</i> the International Plant Protection Convention as a member of the Liaison Group of the Biodiversity-related Conventions and <i>notes</i> with appreciation the role of the International Plant Protection Convention in helping to achieve Aichi Biodiversity Target 9;</p>
+            <blockList eId="dvs_A__list_1">
+              <listIntroduction eId="dvs_A__list_1__intro_1">some intro with <authorialNote marker="1" placement="bottom" eId="dvs_A__list_1__intro_1__authorialNote_1"><p eId="dvs_A__list_1__intro_1__authorialNote_1__p_1">footnote 1</p></authorialNote> and <authorialNote marker="2" placement="bottom" eId="dvs_A__list_1__intro_1__authorialNote_2"><p eId="dvs_A__list_1__intro_1__authorialNote_2__p_1">footnote 2</p></authorialNote></listIntroduction>
+              <item eId="dvs_A__list_1__item_a">
+                <num>(a)</num>
+                <p eId="dvs_A__list_1__item_a__p_1">item a</p>
+              </item>
+              <listWrapUp eId="dvs_A__list_1__wrapup_1">wrap up with <authorialNote marker="3" placement="bottom" eId="dvs_A__list_1__wrapup_1__authorialNote_1"><p eId="dvs_A__list_1__wrapup_1__authorialNote_1__p_1">footnote 3</p></authorialNote></listWrapUp>
+            </blockList>
           </content>
         </paragraph>
       </division>
@@ -36,7 +44,6 @@ DIVISION A. - Cooperation with other conventions
   //Noting// the report of the Executive Secretary on progress,{{^{{FOOTNOTE 1}}}}
 
   FOOTNOTE 1
-
     UNEP/CBD/COP/12/24.
 
   //Recalling// decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,
@@ -44,6 +51,23 @@ DIVISION A. - Cooperation with other conventions
   PARA 1.
 
     //Welcomes// the International Plant Protection Convention as a member of the Liaison Group of the Biodiversity-related Conventions and //notes// with appreciation the role of the International Plant Protection Convention in helping to achieve Aichi Biodiversity Target 9;
+
+    ITEMS
+      some intro with {{FOOTNOTE 1}} and {{FOOTNOTE 2}}
+
+      FOOTNOTE 1
+        footnote 1
+
+      FOOTNOTE 2
+        footnote 2
+
+      ITEM (a)
+        item a
+
+      wrap up with {{FOOTNOTE 3}}
+
+      FOOTNOTE 3
+        footnote 3
 `);
     });
 
@@ -140,17 +164,14 @@ list \\__intro\\__
   SUBHEADING Subheading {{FOOTNOTE y}}
 
   FOOTNOTE x
-
     Content of footnote.
 
   FOOTNOTE y
-
     Content of footnote.
 
   CROSSHEADING A crossheading {{FOOTNOTE z}}
 
   FOOTNOTE z
-
     Content of footnote.
 
   Content of Division A.
@@ -159,11 +180,72 @@ ANNEXURE Annex {{FOOTNOTE a}}
   SUBHEADING Subheading {{FOOTNOTE b}}
 
   FOOTNOTE a
-
     Content of footnote.
 
   FOOTNOTE b
+    Content of footnote.
 
+  Content of Annex.
+`);
+    });
+
+    it('should unparse block lists correctly', () => {
+      const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+      <statement>
+        <mainBody>
+          <division eId="dvs_A">
+            <num>A</num>
+            <heading>Heading <authorialNote marker="x" placement="bottom" eId="dvs_A__authorialNote_1"><p eId="dvs_A__authorialNote_1__p_1">Content of footnote.</p></authorialNote></heading>
+            <subheading>Subheading <authorialNote marker="y" placement="bottom" eId="dvs_A__authorialNote_2"><p eId="dvs_A__authorialNote_2__p_1">Content of footnote.</p></authorialNote></subheading>
+            <content>
+              <crossHeading eId="dvs_A__crossHeading_1">A crossheading <authorialNote marker="z" placement="bottom" eId="dvs_A__crossHeading_1__authorialNote_1">
+                  <p eId="dvs_A__crossHeading_1__authorialNote_1__p_1">Content of footnote.</p>
+                </authorialNote></crossHeading>
+              <p eId="dvs_A__p_1">Content of Division A.</p>
+            </content>
+          </division>
+        </mainBody>
+        <attachments>
+          <attachment eId="att_1">
+            <heading>Annex <authorialNote marker="a" placement="bottom" eId="att_1__authorialNote_1"><p eId="att_1__authorialNote_1__p_1">Content of footnote.</p></authorialNote></heading>
+            <subheading>Subheading <authorialNote marker="b" placement="bottom" eId="att_1__authorialNote_2"><p eId="att_1__authorialNote_2__p_1">Content of footnote.</p></authorialNote></subheading>
+            <doc contains="originalVersion" name="annexure">
+              <meta/>
+              <mainBody>
+                <p eId="att_1__p_1">Content of Annex.</p>
+              </mainBody>
+            </doc>
+          </attachment>
+        </attachments>
+      </statement>
+    </akomaNtoso>`;
+
+      const doc = new DOMParser().parseFromString(xml, "text/xml");
+      const grammar = new BluebellGrammarModel();
+      grammar.setup();
+      expect(grammar.xmlToText(doc)).to.equal(`DIVISION A - Heading {{FOOTNOTE x}}
+  SUBHEADING Subheading {{FOOTNOTE y}}
+
+  FOOTNOTE x
+    Content of footnote.
+
+  FOOTNOTE y
+    Content of footnote.
+
+  CROSSHEADING A crossheading {{FOOTNOTE z}}
+
+  FOOTNOTE z
+    Content of footnote.
+
+  Content of Division A.
+
+ANNEXURE Annex {{FOOTNOTE a}}
+  SUBHEADING Subheading {{FOOTNOTE b}}
+
+  FOOTNOTE a
+    Content of footnote.
+
+  FOOTNOTE b
     Content of footnote.
 
   Content of Annex.

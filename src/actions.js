@@ -102,13 +102,13 @@ export class BluebellActions {
         startColumn: model.getLineLength(sel.endLineNumber) + 1,
         startLineNumber: sel.endLineNumber
       },
-      text: '\n\n' + indent + 'FOOTNOTE 1\n\n' + indent + '  ' + text
+      text: '\n\n' + indent + 'FOOTNOTE 1\n' + indent + '  ' + text
     };
     content.range.endColumn = content.range.startColumn;
     content.range.endLineNumber = content.range.startLineNumber;
 
     // where the cursor ends up
-    const newlines = 4;
+    const newlines = 3;
     const cursor = new window.monaco.Selection(
       content.range.startLineNumber + newlines,
       indent.length + 3,

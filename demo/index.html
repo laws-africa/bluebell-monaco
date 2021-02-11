@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <script type="module" src="dist/app.js"></script>
+  <script defer src="monaco/loader.js"></script>
+  <script defer src="monaco/editor/editor.main.nls.js"></script>
+  <script defer src="monaco/editor/editor.main.js"></script>
+</head>
+<body>
+
+<div class="actions">
+  <button type="button" data-action="format.bold">Bold</button>
+  <button type="button" data-action="insert.footnote">Footnote</button>
+</div>
+
+<div id="editor" style="width: 50%; height: 90vh; border: 1px solid #ccc;"></div>
+
+</body>
+</html>
