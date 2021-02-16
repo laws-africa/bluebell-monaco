@@ -200,16 +200,24 @@ export class BluebellActions {
       return this.wrapRange(range, editor, edit_source, id, marker, marker);
     }
 
-    // The selection covers multiple ranges. Expand our range to cover them all, unwrap each individually,
-    // then wrap the whole thing. We do it in reverse so that we don't need to adjust ranges as they are
+    // The selection covers multiple ranges. Unwrap each individually, create a new range over the unwrapped extent,
+    // then wrap the whole thing. We do it in reverse so that we don't need to adjust ranges too much as they are
     // unwrapped (since the text changes).
+    let newRange = null;
     for (let r of ranges.reverse()) {
       if (monaco.Range.areIntersectingOrTouching(r, range)) {
-        this.unwrapRange(r, editor, edit_source, id, marker, marker);
-        range = range.plusRange(r);
+        r = this.unwrapRange(r, editor, edit_source, id, marker, marker);
+
+        if (newRange) {
+          // shrink down the top of the new range, to take into account that two markers have been deleted
+          newRange = newRange.plusRange(r);
+          newRange = newRange.setEndPosition(newRange.endLineNumber, newRange.endColumn - marker.length * 2);
+        } else {
+          newRange = r;
+        }
       }
     }
-    return this.wrapRange(range, editor, edit_source, id, marker, marker);
+    return this.wrapRange(newRange, editor, edit_source, id, marker, marker);
   }
 
   /**
