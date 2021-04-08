@@ -27,6 +27,17 @@ describe('BluebellGrammarModel', () => {
               </item>
               <listWrapUp eId="dvs_A__list_1__wrapup_1">wrap up with <authorialNote marker="3" placement="bottom" eId="dvs_A__list_1__wrapup_1__authorialNote_1"><p eId="dvs_A__list_1__wrapup_1__authorialNote_1__p_1">footnote 3</p></authorialNote></listWrapUp>
             </blockList>
+            <ul eId="dvs_A__para_1__ul_1">
+              <li eId="dvs_A__para_1__ul_1__li_1">
+                <p eId="dvs_A__para_1__ul_1__li_1__p_1">item 1</p>
+              </li>
+              <li eId="dvs_A__para_1__ul_1__li_2">
+                <p eId="dvs_A__para_1__ul_1__li_2__p_1">item 2</p>
+              </li>
+              <li eId="dvs_A__para_1__ul_1__li_3">
+                <p eId="dvs_A__para_1__ul_1__li_3__p_1">item 3</p>
+              </li>
+            </ul>
           </content>
         </paragraph>
       </division>
@@ -68,6 +79,11 @@ DIVISION A. - Cooperation with other conventions
 
       FOOTNOTE 3
         footnote 3
+
+    BULLETS
+      * item 1
+      * item 2
+      * item 3
 `);
     });
 
