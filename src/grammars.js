@@ -52,7 +52,7 @@ export class BluebellGrammarModel extends GrammarModel {
   getImageAtCursor (editor) {
     const match = super.getImageAtCursor(editor);
     if (match) {
-      match.title = match.match[2].strip();
+      match.title = (match.match[2] || '').trim();
       match.src = match.match[1];
     }
     return match;
