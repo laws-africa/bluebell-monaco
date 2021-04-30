@@ -38,6 +38,7 @@ describe('BluebellGrammarModel', () => {
                 <p eId="dvs_A__para_1__ul_1__li_3__p_1">item 3</p>
               </li>
             </ul>
+            <p class="my-class">With a class</p>
           </content>
         </paragraph>
       </division>
@@ -84,6 +85,8 @@ DIVISION A. - Cooperation with other conventions
       * item 1
       * item 2
       * item 3
+
+    P.my-class With a class
 `);
     });
 
