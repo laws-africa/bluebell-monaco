@@ -497,20 +497,25 @@ export const AKN_TO_TEXT = `
        ............................................................................... -->
 
   <xsl:template name="block-attrs">
-    <xsl:if test="@*[local-name() != 'eId']">
+    <xsl:if test="@class">
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="translate(@class, ' ', '.')" />
+    </xsl:if>
+
+    <xsl:if test="@*[local-name() != 'eId' and local-name() != 'class']">
       <xsl:text>{</xsl:text>
-
-      <xsl:for-each select="@*[local-name() != 'eId']">
-        <xsl:if test="position() > 1">
-          <xsl:text>|</xsl:text>
-        </xsl:if>
-        <xsl:value-of select="local-name(.)" />
-        <xsl:text> </xsl:text>
-        <xsl:value-of select="." />
-      </xsl:for-each>
-
+      <xsl:apply-templates select="@*[local-name() != 'eId' and local-name() != 'class']" mode="generic" />
       <xsl:text>}</xsl:text>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="@*" mode="generic">
+    <xsl:if test="position() > 1">
+      <xsl:text>|</xsl:text>
+    </xsl:if>
+    <xsl:value-of select="local-name(.)" />
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="." />
   </xsl:template>
 
   <!-- ...............................................................................
@@ -563,6 +568,13 @@ export const AKN_TO_TEXT = `
       <xsl:call-template name="indent">
         <xsl:with-param name="level" select="$indent" />
       </xsl:call-template>
+    </xsl:if>
+
+    <!-- include explicit P marker if the element has attributes other than eId -->
+    <xsl:if test="@*[not(local-name() = 'eId')]">
+      <xsl:text>P</xsl:text>
+      <xsl:call-template name="block-attrs" />
+      <xsl:text> </xsl:text>
     </xsl:if>
 
     <xsl:apply-templates>
