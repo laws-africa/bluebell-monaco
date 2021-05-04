@@ -142,6 +142,9 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'LEVEL') or
                     starts-with($text, 'LIST') or
                     starts-with($text, 'LONGTITLE') or
+                    starts-with($text, 'P{') or
+                    starts-with($text, 'P.') or
+                    starts-with($text, 'P ') or
                     starts-with($text, 'PARA') or
                     starts-with($text, 'PARAGRAPH') or
                     starts-with($text, 'PART') or

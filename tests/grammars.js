@@ -108,6 +108,10 @@ DIVISION A. - Cooperation with other conventions
           <p>QUOTE{}</p>
           <p>FOOTNOTE 1</p>
           <p>TABLE in wrapup</p>
+          <p>P foo</p>
+          <p>P.bar foo</p>
+          <p>P{class foo} bar</p>
+          <p>Posh doesn't need to be escaped</p>
         </mainBody>
       </statement>
     </akomaNtoso>`;
@@ -142,6 +146,14 @@ list \\__intro\\__
 \\FOOTNOTE 1
 
 \\TABLE in wrapup
+
+\\P foo
+
+\\P.bar foo
+
+\\P{class foo} bar
+
+Posh doesn't need to be escaped
 `);
     });
 
