@@ -67,7 +67,6 @@ export const THEME_DEF = {
     { token: 'number', foreground: 'C800A4' },
     { token: 'inline.bold', fontStyle: 'bold' },
     { token: 'inline.italic', fontStyle: 'italic' },
-    { token: 'inline.ref', fontStyle: 'underline', foreground: 'ffa500' },
     { token: 'inline.underline', fontStyle: 'underline' },
   ]
 };
