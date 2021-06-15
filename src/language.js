@@ -7,6 +7,10 @@ export const LANGUAGE_DEF = {
   blocks: /QUOTE|ITEMS|BLOCKLIST|BULLETS/,
   markers: /PREFACE|PREAMBLE|INTRODUCTION|BACKGROUND|ARGUMENTS|REMEDIES|MOTIVATION|DECISION|CONCLUSIONS|BODY/,
   headings: /LONGTITLE|CROSSHEADING|SUBHEADING/,
+  // dotted classes for inlines
+  classes: /\.[^. {}]+/,
+  attrs: /{(?:[^} ]+\s+[^} ]+)*}/,
+  inlines: /inline|term|abbr|\^|_|>/,
   tokenizer: {
     root: [
 
@@ -39,11 +43,16 @@ export const LANGUAGE_DEF = {
       [/\*\*.*?\*\*/, 'inline.bold'],
       [/\/\/.*?\/\//, 'inline.italic'],
       [/__.*?__/, 'inline.underline'],
-      [/{{\^.*?}}/, 'inline.superscript'],
-      [/{{_.*?}}/, 'inline.subscript'],
-      [/{{>.*?}}/, 'inline.ref'],
+      // nested inlines, with .classes and {attrs}
+      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {'token': 'number', 'next': '@inlines'}]],
 
       [/[{}[\]()]/, '@brackets']
+    ],
+
+    inlines: [
+      // nested inlines
+      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {'token': 'number', 'next': '@inlines'}]],
+      [/}}/, 'keyword', '@pop']
     ]
   }
 };
@@ -58,7 +67,6 @@ export const THEME_DEF = {
     { token: 'number', foreground: 'C800A4' },
     { token: 'inline.bold', fontStyle: 'bold' },
     { token: 'inline.italic', fontStyle: 'italic' },
-    { token: 'inline.ref', fontStyle: 'underline', foreground: 'ffa500' },
     { token: 'inline.underline', fontStyle: 'underline' },
   ]
 };

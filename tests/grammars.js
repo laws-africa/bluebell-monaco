@@ -39,6 +39,7 @@ describe('BluebellGrammarModel', () => {
               </li>
             </ul>
             <p class="my-class">With a class</p>
+            <p>Text with <inline name="em">emphasis and <abbr title="Abbreviations">ABBR</abbr></inline> and <term refersTo="#foo">terms</term>.</p>
           </content>
         </paragraph>
       </division>
@@ -87,6 +88,8 @@ DIVISION A. - Cooperation with other conventions
       * item 3
 
     P.my-class With a class
+
+    Text with {{inline{name em} emphasis and {{abbr{title Abbreviations} ABBR}}}} and {{term{refersTo #foo} terms}}.
 `);
     });
 
