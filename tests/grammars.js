@@ -89,7 +89,7 @@ DIVISION A. - Cooperation with other conventions
 
     P.my-class With a class
 
-    Text with {{inline{name em} emphasis and {{abbr{title Abbreviations} ABBR}}}} and {{term{refersTo #foo} terms}}.
+    Text with {{em emphasis and {{abbr{title Abbreviations} ABBR}}}} and {{term{refersTo #foo} terms}}.
 `);
     });
 
