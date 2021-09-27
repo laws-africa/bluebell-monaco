@@ -286,4 +286,34 @@ ANNEXURE Annex {{FOOTNOTE a}}
 `);
     });
   });
+
+  it('should unparse nested footnotes correctly', () => {
+    const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+  <statement>
+    <mainBody>
+      <division eId="dvs_A">
+        <num>A.</num>
+        <heading>Cooperation with other conventions</heading>
+        <content>
+          <p eId="dvs_A__p_1">Some text <sup><authorialNote marker="1"><p>Footnote with <authorialNote marker="2"><p>nested footnote</p></authorialNote></p></authorialNote></sup></p>
+        </content>
+      </division>
+    </mainBody>
+  </statement>
+</akomaNtoso>`;
+
+    const doc = new DOMParser().parseFromString(xml, "text/xml");
+    const grammar = new BluebellGrammarModel();
+    grammar.setup();
+    expect(grammar.xmlToText(doc)).to.equal(`DIVISION A. - Cooperation with other conventions
+
+  Some text {{^{{FOOTNOTE 1}}}}
+
+  FOOTNOTE 1
+    Footnote with {{FOOTNOTE 2}}
+
+    FOOTNOTE 2
+      nested footnote
+`);
+  });
 });
