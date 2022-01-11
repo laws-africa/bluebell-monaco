@@ -59,7 +59,7 @@ DIVISION A. - Cooperation with other conventions
   FOOTNOTE 1
     UNEP/CBD/COP/12/24.
 
-  //Recalling// decision XI/6, {{- including paragraph 3, }}in which it urged Parties to pursue efforts{{+ and programmes}} to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,
+  //Recalling// decision XI/6, {{- including paragraph 3, }}in which it urged Parties to pursue efforts{{+  and programmes}} to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,
 
   PARA 1.
 
