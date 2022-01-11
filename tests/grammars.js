@@ -13,7 +13,7 @@ describe('BluebellGrammarModel', () => {
         <heading>Cooperation with other conventions</heading>
         <intro>
           <p eId="dvs_A__p_1"><i>Noting</i> the report of the Executive Secretary on progress,<sup><authorialNote marker="1" placement="bottom" eId="dvs_A__p_1__authorialNote_1"><p eId="dvs_A__p_1__authorialNote_1__p_1">UNEP/CBD/COP/12/24.</p></authorialNote></sup></p>
-          <p eId="dvs_A__p_2"><i>Recalling</i> decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
+          <p eId="dvs_A__p_2"><i>Recalling</i> decision XI/6, <del>including paragraph 3, </del>in which it urged Parties to pursue efforts<ins> and programmes</ins> to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,</p>
         </intro>
         <paragraph eId="dvs_A__para_1">
           <num>1.</num>
@@ -59,7 +59,7 @@ DIVISION A. - Cooperation with other conventions
   FOOTNOTE 1
     UNEP/CBD/COP/12/24.
 
-  //Recalling// decision XI/6, including paragraph 3, in which it urged Parties to pursue efforts to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,
+  //Recalling// decision XI/6, {{- including paragraph 3, }}in which it urged Parties to pursue efforts{{+ and programmes}} to enhance synergies among the biodiversity-related conventions to promote policy coherence, improve efficiency and enhance coordination and cooperation at all levels, and with a view to strengthening Parties’ ownership of the process,
 
   PARA 1.
 
