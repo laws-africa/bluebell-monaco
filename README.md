@@ -62,4 +62,5 @@ There's a small demo editor to test functionality. To use it:
 1. Make your changes.
 2. Update the version in package.json, according to [semver.org](https://semver.org/)
 3. Commit and push.
-4. Publish to GitHub packages with `npm publish`
+4. Create a new release in [GitHub releases](https://github.com/laws-africa/bluebell-monaco/releases/new)
+5. Github will package the release automatically
