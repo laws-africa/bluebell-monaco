@@ -1,0 +1,32 @@
+name: Update xslt
+
+# This workflow is triggered either manually or by a commit to the master branch in the bluebell repo
+on: workflow_dispatch
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Clone bluebell repo
+        uses: actions/checkout@v2
+        with:
+          repository: laws-africa/bluebell
+          ref: master
+          path: _bluebell
+
+      - run: ./update-xslt-from-bluebell.sh _bluebell/bluebell/akn_text.xsl
+
+      - run: rm -rf _bluebell
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          add-paths: 'src/xslt.js'
+          commit-message: 'Update xslt.js from bluebell'
+          branch: update-xslt-from-bluebell
+          delete-branch: true
+          title: 'Update xslt.js from bluebell'
+          body: |
+            Update xslt.js from latest [bluebell/akn_text.xsl](https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl)

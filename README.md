@@ -6,6 +6,10 @@ Bluebell grammar support for the [Monaco Editor](https://microsoft.github.io/mon
 * Actions for monaco to apply formatting (eg. bold, italics). Enabled with `installActions()` and triggered using `editor.trigger('...', 'format.bold')`.
 * An Indigo GrammarModel for Bluebell
 
+This repo's AKN-to-text XSLT is automatically updated when
+[`bluebell/akn_text.xsl`](https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl) is updated in the
+Bluebell repo.
+
 ## Installation
 
 Install with
