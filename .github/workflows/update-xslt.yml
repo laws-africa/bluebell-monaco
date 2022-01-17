@@ -29,5 +29,6 @@ jobs:
           branch: update-xslt-from-bluebell
           delete-branch: true
           title: 'Update xslt.js from bluebell'
+          token: ${{ secrets.LA_ACTIONS_TOKEN }}
           body: |
             Update xslt.js from latest [bluebell/akn_text.xsl](https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl)
