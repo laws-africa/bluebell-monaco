@@ -15,6 +15,7 @@ jobs:
           repository: laws-africa/bluebell
           ref: master
           path: _bluebell
+          token: ${{ secrets.LA_ACTIONS_TOKEN }}
 
       - run: ./update-xslt-from-bluebell.sh _bluebell/bluebell/akn_text.xsl
 
