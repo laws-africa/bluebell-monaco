@@ -100,7 +100,7 @@ DIVISION A. - Cooperation with other conventions
           <p>PART</p>
           <p>a plain \\ backslash</p>
           <p>some **text** at //the start// with **multiple //types// of** markup</p>
-          <p>some [[remarks]] and some __underline__</p>
+          <p>some {{*remarks}} and some __underline__</p>
           <p>include {{^superscripts}} and {{_subscripts}} which are fun</p>
           <p>an {{IMG /foo.png description}} image</p>
           <p>PART in the middle</p>
@@ -126,21 +126,21 @@ DIVISION A. - Cooperation with other conventions
 
 a plain \\\\ backslash
 
-some \\**text\\** at \\//the start\\// with \\**multiple \\//types\\// of\\** markup
+some \\*\\*text\\*\\* at \\/\\/the start\\/\\/ with \\*\\*multiple \\/\\/types\\/\\/ of\\*\\* markup
 
-some \\[[remarks\\]] and some \\__underline\\__
+some \\{\\{*remarks\\}\\} and some \\_\\_underline\\_\\_
 
-include \\{{^superscripts\\}} and \\{{_subscripts\\}} which are fun
+include \\{\\{^superscripts\\}\\} and \\{\\{_subscripts\\}\\} which are fun
 
-an \\{{IMG /foo.png description\\}} image
+an \\{\\{IMG /foo.png description\\}\\} image
 
 \\PART in the middle
 
 \\PART A should be escaped
 
-list \\__intro\\__
+list \\_\\_intro\\_\\_
 
-\\(a) item (a) with a \\{{>http:\\//example.com link\\}}
+\\(a) item (a) with a \\{\\{>http:\\/\\/example.com link\\}\\}
 
 \\CHAPTER.foo
 
