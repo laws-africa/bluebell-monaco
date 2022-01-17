@@ -2,6 +2,7 @@
  * XSLT for transforming AKN into bluebell text.
  *
  * This MUST be kept up to date with https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl
+ * It is automatically updated by update-xslt.sh
  */
 export const AKN_TO_TEXT = `
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -79,31 +80,31 @@ export const AKN_TO_TEXT = `
                                 </xsl:call-template>
                               </xsl:with-param>
                               <xsl:with-param name="value"><xsl:value-of select="'**'" /></xsl:with-param>
-                              <xsl:with-param name="replacement"><xsl:value-of select="'\\**'" /></xsl:with-param>
+                              <xsl:with-param name="replacement"><xsl:value-of select="'\\*\\*'" /></xsl:with-param>
                             </xsl:call-template>
                           </xsl:with-param>
                           <xsl:with-param name="value"><xsl:value-of select="'//'" /></xsl:with-param>
-                          <xsl:with-param name="replacement"><xsl:value-of select="'\\//'" /></xsl:with-param>
+                          <xsl:with-param name="replacement"><xsl:value-of select="'\\/\\/'" /></xsl:with-param>
                         </xsl:call-template>
                       </xsl:with-param>
                       <xsl:with-param name="value"><xsl:value-of select="'__'" /></xsl:with-param>
-                      <xsl:with-param name="replacement"><xsl:value-of select="'\\__'" /></xsl:with-param>
+                      <xsl:with-param name="replacement"><xsl:value-of select="'\\_\\_'" /></xsl:with-param>
                     </xsl:call-template>
                   </xsl:with-param>
                   <xsl:with-param name="value"><xsl:value-of select="'{{'" /></xsl:with-param>
-                  <xsl:with-param name="replacement"><xsl:value-of select="'\\{{'" /></xsl:with-param>
+                  <xsl:with-param name="replacement"><xsl:value-of select="'\\{\\{'" /></xsl:with-param>
                 </xsl:call-template>
               </xsl:with-param>
               <xsl:with-param name="value"><xsl:value-of select="'}}'" /></xsl:with-param>
-              <xsl:with-param name="replacement"><xsl:value-of select="'\\}}'" /></xsl:with-param>
+              <xsl:with-param name="replacement"><xsl:value-of select="'\\}\\}'" /></xsl:with-param>
             </xsl:call-template>
           </xsl:with-param>
           <xsl:with-param name="value"><xsl:value-of select="'[['" /></xsl:with-param>
-          <xsl:with-param name="replacement"><xsl:value-of select="'\\[['" /></xsl:with-param>
+          <xsl:with-param name="replacement"><xsl:value-of select="'\\[\\['" /></xsl:with-param>
         </xsl:call-template>
       </xsl:with-param>
       <xsl:with-param name="value"><xsl:value-of select="']]'" /></xsl:with-param>
-      <xsl:with-param name="replacement"><xsl:value-of select="'\\]]'" /></xsl:with-param>
+      <xsl:with-param name="replacement"><xsl:value-of select="'\\]\\]'" /></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
