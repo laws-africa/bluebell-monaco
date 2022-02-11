@@ -19,7 +19,7 @@ export const LANGUAGE_DEF = {
       [/^\s*@markers\s*$/, 'keyword.marker'],
 
       // blocks
-      [/^\s*@blocks\s*$/, 'keyword.marker'],
+      [/^(\s*@blocks)(@classes*)(@attrs?)(\s*)$/, ['keyword.marker', 'string', 'number', 'white']],
 
       // single line headings
       [/^(\s*)(@headings)(\s.*)$/, ['white', 'keyword.heading', 'string']],
@@ -41,7 +41,7 @@ export const LANGUAGE_DEF = {
       [/^(\s*)(@hier)(\s+.+$)/, ['white', 'keyword.hier', 'number']],
 
       // P (only when it has attribs)
-      [/^(\s*)(P)(@classes*)(@attrs?)/, ['white', 'keyword.hier', 'string', 'number']],
+      [/^(\s*)(P)(@classes*)(@attrs?)(\s|$)/, ['white', 'keyword.hier', 'string', 'number', 'white']],
 
       // tables
       [/^(\s*)(@tables)(@classes*)(@attrs?)(\s*)$/, ['white', 'keyword.marker', 'string', 'number', 'white']],
@@ -59,6 +59,8 @@ export const LANGUAGE_DEF = {
       [/__/, 'inline.underline', '@underline'],
       // remarks
       [/({{\*)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@remark'}]],
+      // links
+      [/({{>)(@classes*)(@attrs?)([^ ]*)/, ['keyword', 'string', 'number', {token: 'inline.link', next: '@inlines'}]],
 
       // generic nested inlines
       [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@inlines'}]],
@@ -101,6 +103,7 @@ export const THEME_DEF = {
     { token: 'inline.bold', fontStyle: 'bold' },
     { token: 'inline.italic', fontStyle: 'italic' },
     { token: 'inline.underline', fontStyle: 'underline' },
+    { token: 'inline.link', fontStyle: 'underline' },
     { token: 'comment.remark', fontStyle: 'italic' },
   ]
 };
