@@ -9,16 +9,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: '12'
+        node-version: '14'
+        registry-url: 'https://npm.pkg.github.com'
+
     - name: Install dependencies
-      run: |
-        echo '//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}' >> .npmrc
-        npm ci --no-audit --prefer-offline
-        rm .npmrc
+      run: npm ci --no-audit --prefer-offline --ignore-scripts
       env:
-        GITHUB_TOKEN: ${{ secrets.LA_ACTIONS_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.LA_ACTIONS_TOKEN }}
+
     - name: Run tests
-      run: |
-        npm test
+      run: npm test
