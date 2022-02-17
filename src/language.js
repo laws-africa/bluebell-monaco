@@ -11,6 +11,7 @@ export const LANGUAGE_DEF = {
   classes: /\.[^. {}]+/,
   attrs: /{(?:[^} ]+\s+[^} ]+)*}/,
   inlines: /inline|term|abbr|em|\^|_|>|\+|-/,
+  tables: /TABLE|TR|TH|TC/,
   tokenizer: {
     root: [
 
@@ -18,13 +19,16 @@ export const LANGUAGE_DEF = {
       [/^\s*@markers\s*$/, 'keyword.marker'],
 
       // blocks
-      [/^\s*@blocks\s*$/, 'keyword.marker'],
+      [/^(\s*@blocks)(@classes*)(@attrs?)(\s*)$/, ['keyword.marker', 'string', 'number', 'white']],
 
       // single line headings
       [/^(\s*)(@headings)(\s.*)$/, ['white', 'keyword.heading', 'string']],
 
       // footnote marker
       [/^(\s*)(FOOTNOTE)(\s.+)$/, ['white', 'keyword.heading', 'number']],
+
+      // attachments
+      [/\s*(ATTACHMENT|APPENDIX|SCHEDULE|ANNEXURE)\b/, 'keyword.attachment'],
 
       // hierarchical
       // PARA
@@ -36,24 +40,55 @@ export const LANGUAGE_DEF = {
       // PARA num
       [/^(\s*)(@hier)(\s+.+$)/, ['white', 'keyword.hier', 'number']],
 
-      // attachments
-      [/\s*(ATTACHMENT|APPENDIX|SCHEDULE|ANNEXURE)\b/, 'keyword.attachment'],
+      // P (only when it has attribs)
+      [/^(\s*)(P)(@classes*)(@attrs?)(\s|$)/, ['white', 'keyword.hier', 'string', 'number', 'white']],
 
-      // inlines
-      [/\*\*.*?\*\*/, 'inline.bold'],
-      [/\/\/.*?\/\//, 'inline.italic'],
-      [/__.*?__/, 'inline.underline'],
-      // nested inlines, with .classes and {attrs}
-      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {'token': 'number', 'next': '@inlines'}]],
+      // tables
+      [/^(\s*)(@tables)(@classes*)(@attrs?)(\s*)$/, ['white', 'keyword.marker', 'string', 'number', 'white']],
+
+      {include: '@inlines'},
 
       [/[{}[\]()]/, '@brackets']
     ],
 
     inlines: [
-      // nested inlines
-      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {'token': 'number', 'next': '@inlines'}]],
-      [/}}/, 'keyword', '@pop']
-    ]
+      // specifically-styled inlines
+      [/}}/, 'keyword', '@pop'],
+      [/\*\*/, 'inline.bold', '@bold'],
+      [/\/\//, 'inline.italic', '@italic'],
+      [/__/, 'inline.underline', '@underline'],
+      // remarks
+      [/({{\*)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@remark'}]],
+      // links
+      [/({{>)(@classes*)(@attrs?)([^ ]*)/, ['keyword', 'string', 'number', {token: 'inline.link', next: '@inlines'}]],
+
+      // generic nested inlines
+      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@inlines'}]],
+    ],
+
+    remark: [
+      [/}}/, 'keyword', '@pop'],
+      {include: '@inlines'},
+      [/./, 'comment.remark']
+    ],
+
+    bold: [
+      [/\*\*/, 'inline.bold', '@pop'],
+      {include: '@inlines'},
+      [/./, 'inline.bold'],
+    ],
+
+    italic: [
+      [/\/\//, 'inline.italic', '@pop'],
+      {include: '@inlines'},
+      [/./, 'inline.italic'],
+    ],
+
+    underline: [
+      [/__/, 'inline.underline', '@pop'],
+      {include: '@inlines'},
+      [/./, 'inline.underline'],
+    ],
   }
 };
 
@@ -68,6 +103,8 @@ export const THEME_DEF = {
     { token: 'inline.bold', fontStyle: 'bold' },
     { token: 'inline.italic', fontStyle: 'italic' },
     { token: 'inline.underline', fontStyle: 'underline' },
+    { token: 'inline.link', fontStyle: 'underline' },
+    { token: 'comment.remark', fontStyle: 'italic' },
   ]
 };
 

@@ -27,13 +27,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const editor = monaco.editor.create(document.getElementById('editor'), {
       value: `
-PART 1 - Heading
+SEC 1. - Definitions
+  SUBHEADING subheading
 
-  SECTION 1. The beginning
+  Normal text
+
+  P.classname{attr value} text with {{term{refersTo #term-fun} fun}} inlines;
+
+  {{^ superscript allows nested **bold** {{^higher}} inlines}}
+
+  QUOTE{startQuote "}
+    A quote with //italics// and __underline__.
   
-    ITEMS
-      ITEM (a)
-        some text
+  URLs in links should be underlined: {{>foo bar}}
+
+  {{*[remarks must be green and italics and allow nested {{>/akn/na/act/1987/5 5 of 1987}} links]}}
+
+  TABLE
+    TR{rowSpan 2}
+      TH.text-right{colSpan 1}
+        heading
+      TC
+        cell
+
+ARTICLE 2.
+
+  SUBPARA - Number but no heading
+
+  The below should NOT highlight since they're not valid
+
+  TABLE some text
+  QUOTE xx
+  PREFACE xxx
 `,
       language: LANGUAGE_ID,
       theme: THEME_ID
