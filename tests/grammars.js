@@ -109,8 +109,13 @@ DIVISION A. - Cooperation with other conventions
           <p>(a) item (a) with a {{>http://example.com link}}</p>
           <p>CHAPTER.foo</p>
           <p>QUOTE{}</p>
+          <p>  ITEMS</p>
+          <p>  BLOCKLIST</p>
+          <p>  BULLETS</p>
           <p>FOOTNOTE 1</p>
           <p>TABLE in wrapup</p>
+          <p>TC</p>
+          <p>TH</p>
           <p>P foo</p>
           <p>P.bar foo</p>
           <p>P{class foo} bar</p>
@@ -140,15 +145,25 @@ an \\{\\{IMG /foo.png description\\}\\} image
 
 list \\_\\_intro\\_\\_
 
-\\(a) item (a) with a \\{\\{>http:\\/\\/example.com link\\}\\}
+(a) item (a) with a \\{\\{>http:\\/\\/example.com link\\}\\}
 
 \\CHAPTER.foo
 
 \\QUOTE{}
 
+\\ITEMS
+
+\\BLOCKLIST
+
+\\BULLETS
+
 \\FOOTNOTE 1
 
 \\TABLE in wrapup
+
+\\TC
+
+\\TH
 
 \\P foo
 

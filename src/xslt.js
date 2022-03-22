@@ -28,6 +28,26 @@ export const AKN_TO_TEXT = `
        Functions / helper templates
        ............................................................................... -->
 
+  <!-- trims whitespace from the left of a string -->
+  <xsl:template name="string-ltrim">
+    <xsl:param name="text" />
+    <xsl:param name="trim" select="'&#09;&#10;&#13; '" />
+
+    <xsl:if test="string-length($text) &gt; 0">
+      <xsl:choose>
+        <xsl:when test="contains($trim, substring($text, 1, 1))">
+          <xsl:call-template name="string-ltrim">
+            <xsl:with-param name="text" select="substring($text, 2)" />
+            <xsl:with-param name="trim" select="$trim" />
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$text" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
   <!-- replaces "value" in "text" with "replacement" -->
   <xsl:template name="string-replace-all">
     <xsl:param name="text" />
@@ -70,7 +90,8 @@ export const AKN_TO_TEXT = `
                     <xsl:call-template name="string-replace-all">
                       <xsl:with-param name="text">
                         <xsl:call-template name="string-replace-all">
-                          <xsl:with-param name="text" select="$text" />
+                          <!-- replace newlines with spaces -->
+                          <xsl:with-param name="text" select="translate($text, '&#13;&#10;', '  ')" />
                           <xsl:with-param name="value"><xsl:value-of select="'\\'" /></xsl:with-param>
                           <xsl:with-param name="replacement"><xsl:value-of select="'\\\\'" /></xsl:with-param>
                         </xsl:call-template>
@@ -102,7 +123,6 @@ export const AKN_TO_TEXT = `
 
     <xsl:variable name="slash">
       <!-- p tags must escape initial content that looks like a block element marker -->
-      <!-- TODO: all keywords -->
       <xsl:if test="$text = 'ARGUMENTS' or
                     $text = 'BACKGROUND' or
                     $text = 'BODY' or
@@ -120,6 +140,8 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'ARTICLE') or
                     starts-with($text, 'ATTACHMENT') or
                     starts-with($text, 'BOOK') or
+                    starts-with($text, 'BULLETS') or
+                    starts-with($text, 'BLOCKLIST') or
                     starts-with($text, 'CHAP') or
                     starts-with($text, 'CHAPTER') or
                     starts-with($text, 'CLAUSE') or
@@ -128,6 +150,7 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'FOOTNOTE') or
                     starts-with($text, 'HEADING') or
                     starts-with($text, 'INDENT') or
+                    starts-with($text, 'ITEMS') or
                     starts-with($text, 'LEVEL') or
                     starts-with($text, 'LIST') or
                     starts-with($text, 'LONGTITLE') or
@@ -158,13 +181,12 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'SUBSECTION') or
                     starts-with($text, 'SUBTITLE') or
                     starts-with($text, 'TABLE') or
-                    starts-with($text, 'TD') or
+                    starts-with($text, 'TC') or
                     starts-with($text, 'TH') or
                     starts-with($text, 'TITLE') or
                     starts-with($text, 'TOME') or
                     starts-with($text, 'TR') or
-                    starts-with($text, 'TRANSITIONAL') or
-                    starts-with($text, '(')">
+                    starts-with($text, 'TRANSITIONAL')">
         <xsl:value-of select="'\\'" />
       </xsl:if>
     </xsl:variable>
@@ -293,6 +315,8 @@ export const AKN_TO_TEXT = `
       </xsl:otherwise>
     </xsl:choose>
 
+    <xsl:call-template name="block-attrs" />
+
     <xsl:if test="a:num">
       <xsl:text> </xsl:text>
       <xsl:value-of select="a:num" />
@@ -334,7 +358,9 @@ export const AKN_TO_TEXT = `
     <xsl:call-template name="indent">
       <xsl:with-param name="level" select="$indent" />
     </xsl:call-template>
-    <xsl:text>ITEMS&#10;</xsl:text>
+    <xsl:text>ITEMS</xsl:text>
+    <xsl:call-template name="block-attrs" />
+    <xsl:text>&#10;</xsl:text>
 
     <xsl:apply-templates>
       <xsl:with-param name="indent" select="$indent + 1" />
@@ -364,7 +390,9 @@ export const AKN_TO_TEXT = `
     <xsl:call-template name="indent">
       <xsl:with-param name="level" select="$indent" />
     </xsl:call-template>
-    <xsl:text>BULLETS&#10;</xsl:text>
+    <xsl:text>BULLETS</xsl:text>
+    <xsl:call-template name="block-attrs" />
+    <xsl:text>&#10;</xsl:text>
 
     <xsl:apply-templates>
       <xsl:with-param name="indent" select="$indent + 1" />
@@ -657,7 +685,11 @@ export const AKN_TO_TEXT = `
     <xsl:param name="indent">0</xsl:param>
 
     <xsl:text>{{&gt;</xsl:text>
-    <xsl:value-of select="@href" />
+    <xsl:call-template name="string-replace-all">
+      <xsl:with-param name="text" select="@href"></xsl:with-param>
+      <xsl:with-param name="value" select="' '"></xsl:with-param>
+      <xsl:with-param name="replacement" select="'%20'"></xsl:with-param>
+    </xsl:call-template>
     <xsl:text> </xsl:text>
     <xsl:apply-templates>
       <xsl:with-param name="indent" select="$indent" />
@@ -667,7 +699,11 @@ export const AKN_TO_TEXT = `
 
   <xsl:template match="a:img">
     <xsl:text>{{IMG </xsl:text>
-    <xsl:value-of select="@src" />
+    <xsl:call-template name="string-replace-all">
+      <xsl:with-param name="text" select="@src"></xsl:with-param>
+      <xsl:with-param name="value" select="' '"></xsl:with-param>
+      <xsl:with-param name="replacement" select="'%20'"></xsl:with-param>
+    </xsl:call-template>
     <xsl:if test="@alt">
       <xsl:text> </xsl:text>
       <xsl:value-of select="@alt" />
@@ -726,7 +762,7 @@ export const AKN_TO_TEXT = `
   </xsl:template>
 
   <!-- general inlines that follow a common pattern -->
-  <xsl:template match="a:abbr | a:term | a:inline | a:ins | a:del">
+  <xsl:template match="a:abbr | a:def | a:term | a:inline | a:ins | a:del">
     <xsl:param name="indent">0</xsl:param>
 
     <xsl:text>{{</xsl:text>
@@ -766,11 +802,15 @@ export const AKN_TO_TEXT = `
        Text
        ............................................................................... -->
 
-  <!-- first text nodes of these elems must be escaped if they have special chars -->
+  <!-- first text nodes of these elems must be left-trimmed and escaped if they have special chars -->
   <xsl:template match="a:*[self::a:p or self::a:listIntroduction or self::a:listWrapUp]
                        /text()[not(preceding-sibling::*)]">
     <xsl:call-template name="escape">
-      <xsl:with-param name="text" select="." />
+      <xsl:with-param name="text">
+        <xsl:call-template name="string-ltrim">
+          <xsl:with-param name="text" select="." />
+        </xsl:call-template>
+      </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
