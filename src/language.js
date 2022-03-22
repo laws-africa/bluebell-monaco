@@ -10,7 +10,7 @@ export const LANGUAGE_DEF = {
   // dotted classes for inlines
   classes: /\.[^. {}]+/,
   attrs: /{(?:[^} ]+\s+[^} ]+)*}/,
-  inlines: /inline|term|abbr|em|\^|_|>|\+|-/,
+  inlines: /abbr|def|em|inline|term|\^|_|>|\+|-/,
   tables: /TABLE|TR|TH|TC/,
   tokenizer: {
     root: [
