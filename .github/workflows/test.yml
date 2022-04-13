@@ -19,6 +19,7 @@ jobs:
       run: |
         echo '//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}' >> .npmrc
         npm ci --no-audit --prefer-offline --ignore-scripts
+        rm .npmrc
 
     - name: Run tests
       run: npm test
