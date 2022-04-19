@@ -35,7 +35,7 @@ export class BluebellGrammarModel extends GrammarModel {
    * Markup a textual remark
    */
   markupRemark (text) {
-    return `[[${text}]]`;
+    return `{{*[${text}]}}`;
   }
 
   /**
