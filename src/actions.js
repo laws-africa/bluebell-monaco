@@ -34,7 +34,6 @@ export class BluebellActions {
     editor.addAction({
       id: 'format.subscript',
       label: 'Subscript',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.US_MINUS],
       run: this.formatSubscript.bind(this)
     });
     editor.addAction({
