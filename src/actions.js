@@ -45,7 +45,7 @@ export class BluebellActions {
     editor.addAction({
       id: 'insert.footnote',
       label: 'Insert footnote',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_6],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_6],
       run: this.insertFootnote.bind(this)
     });
     editor.addAction({
