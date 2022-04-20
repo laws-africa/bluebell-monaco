@@ -39,7 +39,7 @@ export class BluebellActions {
     editor.addAction({
       id: 'format.remark',
       label: 'Format Remark',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_8],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_8],
       run: this.formatRemark.bind(this)
     });
     editor.addAction({
