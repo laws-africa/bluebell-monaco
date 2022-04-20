@@ -1,4 +1,4 @@
-import { registerLanguage, LANGUAGE_ID, THEME_ID, installActions } from "../index.js";
+import { BluebellGrammarModel } from "../index.js";
 
 // tell monaco where to load its files from
 window.require = {
@@ -22,11 +22,16 @@ function waitForMonaco () {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  waitForMonaco().then(() => {
-    registerLanguage();
+  waitForMonaco().then(async () => {
+    // registerLanguage();
 
-    const editor = monaco.editor.create(document.getElementById('editor'), {
-      value: `
+    const grammar = new BluebellGrammarModel('/akn/za/act/2009/1', '');
+    await grammar.setup();
+
+    const editor = monaco.editor.create(document.getElementById('editor'), grammar.monacoOptions());
+    grammar.setupEditor(editor);
+
+    editor.setValue(`
 SEC 1. - Definitions
   SUBHEADING subheading
 
@@ -59,11 +64,7 @@ ARTICLE 2.
   TABLE some text
   QUOTE xx
   PREFACE xxx
-`,
-      language: LANGUAGE_ID,
-      theme: THEME_ID
-    });
-    installActions(editor);
+`);
 
     // bind buttons
     for (let btn of document.querySelectorAll('.actions button[data-action]')) {
