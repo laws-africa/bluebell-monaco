@@ -29,7 +29,6 @@ export class BluebellActions {
     editor.addAction({
       id: 'format.superscript',
       label: 'Superscript',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.US_EQUAL],
       run: this.formatSuperscript.bind(this)
     });
     editor.addAction({
