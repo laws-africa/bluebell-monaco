@@ -153,15 +153,16 @@ export class BluebellActions {
 
   insertSchedule (editor) {
     const sel = editor.getSelection();
-    const indent = ' '.repeat(indentAtSelection(editor, sel));
-    const cursor = sel.setEndPosition(sel.startLineNumber + 1, 12 + 24)
-      .setStartPosition(sel.startLineNumber + 1, 12);
+    const indentNo = indentAtSelection(editor, sel) - 1;
+    const indent = ' '.repeat(indentNo);
+    const cursor = sel.setEndPosition(sel.startLineNumber + 1, indentNo + 10 + 24)
+      .setStartPosition(sel.startLineNumber + 1, indentNo + 10);
 
     editor.pushUndoStop();
     editor.executeEdits(this.editSource, [{
       identifier: 'insert.schedule',
       range: sel,
-      text: 'SCHEDULE <Optional schedule name>\n' + indent + '  SUBHEADING <Optional schedule title>\n\n',
+      text: `\n${indent}SCHEDULE <Optional schedule name>\n${indent}  SUBHEADING <Optional schedule title>\n\n`,
     }], [cursor]);
     editor.pushUndoStop();
   }
