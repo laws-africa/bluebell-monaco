@@ -15,7 +15,7 @@ export class BluebellActions {
       run: this.formatBold.bind(this)
     });
     editor.addAction({
-      id: 'format.italic',
+      id: 'format.italics',
       label: 'Italic',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_I],
       run: this.formatItalic.bind(this)
@@ -69,7 +69,7 @@ export class BluebellActions {
 
   formatItalic (editor) {
     editor.pushUndoStop();
-    this.toggleWrapSelection(editor, this.editSource, 'format.italic', '//');
+    this.toggleWrapSelection(editor, this.editSource, 'format.italics', '//');
     editor.pushUndoStop();
   }
 
