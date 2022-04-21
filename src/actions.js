@@ -1,4 +1,4 @@
-import { wrapSelection, indentAtSelection } from '@laws-africa/indigo-akn';
+import { wrapSelection } from '@laws-africa/indigo-akn';
 
 export class BluebellActions {
   constructor() {
@@ -346,3 +346,17 @@ export class BluebellActions {
 export function installActions (editor) {
   new BluebellActions().installActions(editor);
 }
+
+/**
+ * Returns the size of the indent, in spaces, at the given selection
+ */
+export function indentAtSelection (editor, sel) {
+  // indent is either the first non-whitespace character on the current line (ie. the indent of this line),
+  // or where the cursor is if there's no text on this line
+  let indent = editor.getModel().getLineFirstNonWhitespaceColumn(sel.startLineNumber) - 1;
+  if (indent < 0) {
+    indent = sel.startColumn;
+  }
+  return indent;
+}
+
