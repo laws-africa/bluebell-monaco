@@ -15,7 +15,7 @@ export class BluebellActions {
       run: this.formatBold.bind(this)
     });
     editor.addAction({
-      id: 'format.italic',
+      id: 'format.italics',
       label: 'Italic',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_I],
       run: this.formatItalic.bind(this)
@@ -37,8 +37,15 @@ export class BluebellActions {
       run: this.formatSubscript.bind(this)
     });
     editor.addAction({
+      id: 'format.remark',
+      label: 'Format Remark',
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_8],
+      run: this.formatRemark.bind(this)
+    });
+    editor.addAction({
       id: 'insert.footnote',
       label: 'Insert footnote',
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_6],
       run: this.insertFootnote.bind(this)
     });
     editor.addAction({
@@ -46,6 +53,12 @@ export class BluebellActions {
       label: 'Insert table',
       run: this.insertTable.bind(this)
     });
+    editor.addAction({
+      id: 'insert.schedule',
+      label: 'Insert Schedule',
+      run: this.insertSchedule.bind(this)
+    });
+
   }
 
   formatBold (editor) {
@@ -56,7 +69,7 @@ export class BluebellActions {
 
   formatItalic (editor) {
     editor.pushUndoStop();
-    this.toggleWrapSelection(editor, this.editSource, 'format.italic', '//');
+    this.toggleWrapSelection(editor, this.editSource, 'format.italics', '//');
     editor.pushUndoStop();
   }
 
@@ -75,6 +88,12 @@ export class BluebellActions {
   formatSubscript (editor) {
     editor.pushUndoStop();
     wrapSelection(editor, this.editSource, 'format.subscript', '{{_', '}}');
+    editor.pushUndoStop();
+  }
+
+  formatRemark (editor) {
+    editor.pushUndoStop();
+    wrapSelection(editor, this.editSource, 'format.remark', '{{*[', ']}}');
     editor.pushUndoStop();
   }
 
@@ -127,8 +146,24 @@ export class BluebellActions {
     editor.executeEdits(this.editSource, [{
       identifier: 'insert.table',
       range: sel,
-      text: 'TABLE\n\n' + indent + ' TR\n\n' + indent + '   TH\n\n' + indent + '     Heading 1\n\n' + indent + '   TH\n\n' + indent + '     Heading 2\n\n' + indent + ' TR\n\n' + indent + '   TC\n\n' + indent + '     Content 1\n\n' + indent + '   TC\n' + indent + '     Content 2'
+      text: 'TABLE\n\n' + indent + ' TR\n\n' + indent + '   TH\n\n' + indent + '     Heading 1\n\n' + indent + '   TH\n\n' + indent + '     Heading 2\n\n' + indent + ' TR\n\n' + indent + '   TC\n\n' + indent + '     Content 1\n\n' + indent + '   TC\n\n' + indent + '     Content 2'
     }]);
+    editor.pushUndoStop();
+  }
+
+  insertSchedule (editor) {
+    const sel = editor.getSelection();
+    const indentNo = indentAtSelection(editor, sel) - 1;
+    const indent = ' '.repeat(indentNo);
+    const cursor = sel.setEndPosition(sel.startLineNumber + 1, indentNo + 10 + 24)
+      .setStartPosition(sel.startLineNumber + 1, indentNo + 10);
+
+    editor.pushUndoStop();
+    editor.executeEdits(this.editSource, [{
+      identifier: 'insert.schedule',
+      range: sel,
+      text: `\n${indent}SCHEDULE <Optional schedule name>\n${indent}  SUBHEADING <Optional schedule title>\n\n`,
+    }], [cursor]);
     editor.pushUndoStop();
   }
 
