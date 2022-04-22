@@ -153,7 +153,7 @@ export class BluebellActions {
 
   insertSchedule (editor) {
     const sel = editor.getSelection();
-    const indentNo = indentAtSelection(editor, sel) - 1;
+    const indentNo = indentAtSelection(editor, sel);
     const indent = ' '.repeat(indentNo);
     const cursor = sel.setEndPosition(sel.startLineNumber + 1, indentNo + 10 + 24)
       .setStartPosition(sel.startLineNumber + 1, indentNo + 10);
