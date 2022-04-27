@@ -53,17 +53,20 @@ export const LANGUAGE_DEF = {
 
     inlines: [
       // specifically-styled inlines
-      [/}}/, 'keyword', '@pop'],
       [/\*\*/, 'inline.bold', '@bold'],
       [/\/\//, 'inline.italic', '@italic'],
       [/__/, 'inline.underline', '@underline'],
       // remarks
       [/({{\*)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@remark'}]],
       // links
-      [/({{>)(@classes*)(@attrs?)([^ ]*)/, ['keyword', 'string', 'number', {token: 'inline.link', next: '@inlines'}]],
-
+      [/({{>)(@classes*)(@attrs?)([^ ]*)/, ['keyword', 'string', 'number', {token: 'inline.link', next: '@inline'}]],
       // generic nested inlines
-      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@inlines'}]],
+      [/({{@inlines)(@classes*)(@attrs?)/, ['keyword', 'string', {token: 'number', next: '@inline'}]],
+    ],
+
+    inline: [
+      [/}}/, 'keyword', '@pop'],
+      {include: '@inlines'},
     ],
 
     remark: [
