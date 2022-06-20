@@ -15,7 +15,7 @@ Bluebell repo.
 Install with
 
 ```bash
-npm install @laws-africa/bluebell-monaco
+npm install @lawsafrica/bluebell-monaco
 ```
 
 ## Usage
