@@ -1,4 +1,4 @@
-import { wrapSelection, indentAtSelection } from '@laws-africa/indigo-akn';
+import { wrapSelection, indentAtSelection } from '@lawsafrica/indigo-akn';
 
 export class BluebellActions {
   constructor() {

@@ -1,4 +1,4 @@
-import { GrammarModel } from "@laws-africa/indigo-akn";
+import { GrammarModel } from "@lawsafrica/indigo-akn";
 import { LANGUAGE_ID, registerLanguage, THEME_ID } from "./language";
 import { installActions } from "./actions";
 import { AKN_TO_TEXT } from "./xslt";
