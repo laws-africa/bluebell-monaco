@@ -1,6 +1,6 @@
 # bluebell-monaco
 
-Bluebell grammar support for the [Monaco Editor](https://microsoft.github.io/monaco-editor/).
+[Bluebell grammar](https://github.com/laws-africa/bluebell) support for the [Monaco Editor](https://microsoft.github.io/monaco-editor/).
 
 * Language/syntax rules and a corresponding theme to enable syntax highlighting. Enabled with `registerLanguage()`.
 * Actions for monaco to apply formatting (eg. bold, italics). Enabled with `installActions()` and triggered using `editor.trigger('...', 'format.bold')`.
