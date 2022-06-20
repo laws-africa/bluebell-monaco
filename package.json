@@ -8,7 +8,7 @@
     "test": "karma start karma.conf.js"
   },
   "author": "Greg Kempe <greg@laws.africa>",
-  "license": "UNLICENSED",
+  "license": "LGPL-3.0-or-later",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },

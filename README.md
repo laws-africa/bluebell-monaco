@@ -68,3 +68,20 @@ There's a small demo editor to test functionality. To use it:
 3. Commit and push.
 4. Create a new release in [GitHub releases](https://github.com/laws-africa/bluebell-monaco/releases/new)
 5. Github will package the release automatically
+
+# License
+
+Copyright 2020 Laws.Africa.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
