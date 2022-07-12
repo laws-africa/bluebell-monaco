@@ -108,7 +108,15 @@ export const THEME_DEF = {
     { token: 'inline.underline', fontStyle: 'underline' },
     { token: 'inline.link', fontStyle: 'underline' },
     { token: 'comment.remark', fontStyle: 'italic' },
-  ]
+  ],
+  colors: {
+    "editor.background":"#FFFFFE",
+    "editor.foreground":"#000000",
+    "editor.inactiveSelectionBackground":"#E5EBF1",
+    "editorIndentGuide.background":"#D3D3D3",
+    "editorIndentGuide.activeBackground":"#939393",
+    "editor.selectionHighlightBackground":"#ADD6FF4D",
+  }
 };
 
 /**

@@ -12,4 +12,12 @@ module.exports = {
   output: {
     filename: 'app.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['css-loader']
+      }
+    ]
+  }
 };
