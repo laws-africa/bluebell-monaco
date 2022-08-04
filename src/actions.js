@@ -11,19 +11,19 @@ export class BluebellActions {
     editor.addAction({
       id: 'format.bold',
       label: 'Bold',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_B],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyB],
       run: this.formatBold.bind(this)
     });
     editor.addAction({
       id: 'format.italics',
       label: 'Italic',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_I],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyI],
       run: this.formatItalic.bind(this)
     });
     editor.addAction({
       id: 'format.underline',
       label: 'Underline',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_U],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyU],
       run: this.formatUnderline.bind(this)
     });
     editor.addAction({
@@ -39,13 +39,13 @@ export class BluebellActions {
     editor.addAction({
       id: 'format.remark',
       label: 'Format Remark',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_8],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Digit8],
       run: this.formatRemark.bind(this)
     });
     editor.addAction({
       id: 'insert.footnote',
       label: 'Insert footnote',
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_6],
+      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.Digit6],
       run: this.insertFootnote.bind(this)
     });
     editor.addAction({
