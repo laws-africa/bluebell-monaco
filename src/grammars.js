@@ -46,7 +46,7 @@ export class BluebellGrammarModel extends GrammarModel {
   }
 
   markupImage (title, src) {
-    return `{{IMG ${src}` + (title ? ` ${title}` : '') + '}}';
+    return `{{IMG ${src.replaceAll(' ', '%20')}` + (title ? ` ${title}` : '') + '}}';
   }
 
   getImageAtCursor (editor) {
