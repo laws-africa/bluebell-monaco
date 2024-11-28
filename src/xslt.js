@@ -78,7 +78,7 @@ export const AKN_TO_TEXT = `
     <xsl:param name="text" />
     <xsl:param name="ch" select="substring($text, 1, 1)" />
 
-    <xsl:if test="substring($text, 1, 1) = $ch">
+    <xsl:if test="string-length($text) &gt; 0 and substring($text, 1, 1) = $ch">
       <xsl:value-of select="$ch" />
       <xsl:call-template name="prefix-run">
         <xsl:with-param name="text" select="substring($text, 2)" />
@@ -92,7 +92,7 @@ export const AKN_TO_TEXT = `
     <xsl:param name="text" />
     <xsl:param name="ch" select="substring($text, string-length($text))" />
 
-    <xsl:if test="substring($text, string-length($text)) = $ch">
+    <xsl:if test="string-length($text) &gt; 0 and substring($text, string-length($text)) = $ch">
       <xsl:value-of select="$ch" />
       <xsl:call-template name="suffix-run">
         <xsl:with-param name="text" select="substring($text, 1, string-length($text) - 1)" />
@@ -268,6 +268,7 @@ export const AKN_TO_TEXT = `
                     starts-with($text, 'ART') or
                     starts-with($text, 'ARTICLE') or
                     starts-with($text, 'ATTACHMENT') or
+                    starts-with($text, 'BLOCKS') or
                     starts-with($text, 'BLOCKLIST') or
                     starts-with($text, 'BOOK') or
                     starts-with($text, 'BULLETS') or
@@ -625,6 +626,21 @@ export const AKN_TO_TEXT = `
     </xsl:call-template>
     <xsl:text>FOOTNOTE </xsl:text>
     <xsl:value-of select="@marker"/>
+    <xsl:text>&#10;</xsl:text>
+
+    <xsl:apply-templates>
+      <xsl:with-param name="indent" select="$indent + 1" />
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="a:blockContainer">
+    <xsl:param name="indent">0</xsl:param>
+
+    <xsl:call-template name="indent">
+      <xsl:with-param name="level" select="$indent" />
+    </xsl:call-template>
+    <xsl:text>BLOCKS</xsl:text>
+    <xsl:call-template name="block-attrs" />
     <xsl:text>&#10;</xsl:text>
 
     <xsl:apply-templates>
