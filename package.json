@@ -1,6 +1,6 @@
 {
   "name": "@lawsafrica/bluebell-monaco",
-  "version": "4.8.1",
+  "version": "4.8.2",
   "repository": "git://github.com/laws-africa/bluebell-monaco.git",
   "description": "Monaco editor tooling for the Bluebell grammar",
   "main": "index.js",
