@@ -1,6 +1,6 @@
 name: Update xslt
 
-# This workflow is triggered either manually or by a commit to the master branch in the bluebell repo
+# This workflow is triggered either manually or by a commit to the main branch in the bluebell repo
 on: workflow_dispatch
 
 jobs:
@@ -10,10 +10,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Clone bluebell repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           repository: laws-africa/bluebell
-          ref: master
+          ref: main
           path: _bluebell
           token: ${{ secrets.LA_ACTIONS_TOKEN }}
 
@@ -31,4 +31,4 @@ jobs:
           title: 'Update xslt.js from bluebell'
           token: ${{ secrets.LA_ACTIONS_TOKEN }}
           body: |
-            Update xslt.js from latest [bluebell/akn_text.xsl](https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl)
+            Update xslt.js from latest [bluebell/akn_text.xsl](https://github.com/laws-africa/bluebell/blob/main/bluebell/akn_text.xsl)
