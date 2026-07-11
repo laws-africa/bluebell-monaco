@@ -19,7 +19,7 @@ cat << EOF > src/xslt.js
 /**
  * XSLT for transforming AKN into bluebell text.
  *
- * This MUST be kept up to date with https://github.com/laws-africa/bluebell/blob/master/bluebell/akn_text.xsl
+ * This MUST be kept up to date with https://github.com/laws-africa/bluebell/blob/main/bluebell/akn_text.xsl
  * It is automatically updated by update-xslt.sh
  */
 export const AKN_TO_TEXT = \`
