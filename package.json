@@ -5,12 +5,13 @@
   "description": "Monaco editor tooling for the Bluebell grammar",
   "main": "index.js",
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "test:no-xslt": "TEST_NO_NATIVE_XSLT=1 karma start karma.conf.js --browsers ChromeHeadlessWithoutXslt"
   },
   "author": "Greg Kempe <greg@laws.africa>",
   "license": "LGPL-3.0-or-later",
   "dependencies": {
-    "@lawsafrica/indigo-akn": "^5.2.1"
+    "@lawsafrica/indigo-akn": "^5.9.0"
   },
   "devDependencies": {
     "chai": "^4.3.6",
@@ -21,10 +22,10 @@
     "karma-cli": "^2.0.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-webpack": "^4.0.2",
+    "karma-webpack": "^5.0.1",
     "mocha": "^10.0.0",
     "monaco-editor": "^0.33.0",
-    "webpack": "^4.4.2",
+    "webpack": "^5.112.2",
     "webpack-cli": "^4.10.0"
   },
   "publishConfig": {

@@ -1,4 +1,4 @@
-import { GrammarModel } from "@lawsafrica/indigo-akn";
+import { GrammarModel, createXsltProcessor } from "@lawsafrica/indigo-akn";
 import { LANGUAGE_ID, registerLanguage, THEME_ID } from "./language";
 import { installActions } from "./actions";
 import { AKN_TO_TEXT } from "./xslt";
@@ -17,7 +17,7 @@ export class BluebellGrammarModel extends GrammarModel {
 
   setup () {
     const xml = new DOMParser().parseFromString(AKN_TO_TEXT, 'text/xml');
-    this.textTransform = new XSLTProcessor();
+    this.textTransform = createXsltProcessor();
     this.textTransform.importStylesheet(xml);
     // return immediately resolved promise
     return new Promise(resolve => resolve());

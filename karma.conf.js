@@ -15,6 +15,13 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeHeadlessWithoutXslt: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-features=XSLT', '--disable-blink-features=XSLT']
+      }
+    },
+    client: { noNativeXslt: process.env.TEST_NO_NATIVE_XSLT === '1' },
     autoWatch: false,
     singleRun: true,
     concurrency: Infinity,
