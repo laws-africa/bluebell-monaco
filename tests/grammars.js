@@ -2,6 +2,24 @@ import { expect } from 'chai';
 import { BluebellGrammarModel } from "../src/grammars";
 
 describe('BluebellGrammarModel', () => {
+  before(() => {
+    if (window.__karma__.config.noNativeXslt) {
+      // Verify the browser really removed the API before setup can install it.
+      expect(typeof window.XSLTProcessor).to.equal('undefined');
+    }
+  });
+
+  describe('#setup()', () => {
+    it('should initialize a text transform through the shared factory', async () => {
+      const grammar = new BluebellGrammarModel();
+      await grammar.setup();
+      const xml = new DOMParser().parseFromString(
+        '<p xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">Hello</p>',
+        'text/xml'
+      );
+      expect(grammar.xmlToText(xml)).to.equal('Hello\n');
+    });
+  });
   describe('#xmlToText()', () => {
     it('should unparse xml correctly', () => {
       const xml = `<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">

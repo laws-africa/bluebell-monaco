@@ -23,3 +23,6 @@ jobs:
 
     - name: Run tests
       run: npm test
+
+    - name: Run tests without native XSLT
+      run: npm run test:no-xslt
